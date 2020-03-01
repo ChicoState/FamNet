@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "471135259059",
+    "firebase_url": "https://famnet-84c11.firebaseio.com",
+    "project_id": "famnet-84c11",
+    "storage_bucket": "famnet-84c11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471135259059:android:fc41674e2507f6513ca3c6",
+        "android_client_info": {
+          "package_name": "famnet.famnet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471135259059-j2aic1v5f43o7q96pqtu1h639uloa6i6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5FKl_XANDyp-pM4-wKRYTJXJND1VKnCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471135259059-j2aic1v5f43o7q96pqtu1h639uloa6i6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
