@@ -1,64 +1,113 @@
+//Adapted from "Making a To-do App with Flutter" https://medium.com/the-web-tub/making-a-todo-app-with-flutter-5c63dab88190
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 final databaseReference = Firestore.instance;
 //final databaseReference = FirebaseDatabase.instance.reference();
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+void main() => runApp(new TodoApp());
+class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+
+    return new MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'To-do List',
+        home: new TodoList()
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class TodoList extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  createState() => new TodoListState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class TodoListState extends State<TodoList> {
+  List<String> _todoItems = [];
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+  // This will be called each time the + button is pressed
+  void _addTodoItem(String task) {
+    // Prevents empty strings from being added
+    if(task.length > 0) {
+      setState(() => _todoItems.add(task));
+    }
+  }
 
-      _counter++;
-    });
+  void _pushAddTodoScreen() {
+    // Push this page onto the stack
+    Navigator.of(context).push(
+      // MaterialPageRoute will automatically animate the screen entry, as well
+      // as adding a back button to close it
+        new MaterialPageRoute(
+            builder: (context) {
+              return new Scaffold(
+                  appBar: new AppBar(
+                      title: new Text('Add a new task')
+                  ),
+                  body: new TextField(
+                    autofocus: true,
+                    onSubmitted: (val) {
+                      _addTodoItem(val);
+                      Navigator.pop(context); // Close the add todo screen
+                    },
+                    decoration: new InputDecoration(
+                        hintText: 'Enter something to do...',
+                        contentPadding: const EdgeInsets.all(16.0)
+                    ),
+                  )
+              );
+            }
+        )
+    );
+  }
+
+  void _removeTodoItem(int index) {
+    setState(() => _todoItems.removeAt(index));
+  }
+
+  // Show an alert dialog asking the user to confirm that the task is done
+  void _promptRemoveTodoItem(int index) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+              title: new Text('Mark "${_todoItems[index]}" as done?'),
+              actions: <Widget>[
+                new FlatButton(
+                    child: new Text('CANCEL'),
+                    onPressed: () => Navigator.of(context).pop()
+                ),
+                new FlatButton(
+                    child: new Text('MARK AS DONE'),
+                    onPressed: () {
+                      _removeTodoItem(index);
+                      Navigator.of(context).pop();
+                    }
+                )
+              ]
+          );
+        }
+    );
+  }
+
+  // Build the whole list of todo items
+  Widget _buildTodoList() {
+    return new ListView.builder(
+      itemBuilder: (context, index) {
+        if(index < _todoItems.length) {
+          return _buildTodoItem(_todoItems[index], index);
+        }
+      },
+    );
+  }
+
+  // Build a single todo item
+  Widget _buildTodoItem(String todoText, int index) {
+    return new ListTile(
+        title: new Text(todoText),
+        onTap: () => _promptRemoveTodoItem(index)
+    );
   }
   void createRecord() async {
     await databaseReference.collection("books")
@@ -78,53 +127,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+    return new Scaffold(
+      appBar: new AppBar(
+          title: new Text('Todo List'),
+          actions: <Widget>[
+            //empty button that does nothing
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.adb),
             ),
           ],
-        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: createRecord,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: _buildTodoList(),
+      floatingActionButton: new FloatingActionButton(
+          onPressed: _pushAddTodoScreen, // pressing this button now opens the new screen
+          tooltip: 'Add task',
+          child: new Icon(Icons.add)
+      ),
     );
   }
 }
