@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+final databaseReference = Firestore.instance;
+//final databaseReference = FirebaseDatabase.instance.reference();
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -53,8 +56,24 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
+
       _counter++;
     });
+  }
+  void createRecord() async {
+    await databaseReference.collection("books")
+        .document("1")
+        .setData({
+      'title': 'Mastering Flutter',
+      'description': 'Programming Guide for Dart'
+    });
+
+    DocumentReference ref = await databaseReference.collection("books")
+        .add({
+      'title': 'Flutter in Action',
+      'description': 'Complete Programming Guide to learn Flutter'
+    });
+    print(ref.documentID);
   }
 
   @override
@@ -102,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: createRecord,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
