@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'todo.dart';
 
-void main() => runApp(new TodoApp());
+void main() => runApp(new FamNetApp());
 
-class TodoApp extends StatelessWidget {
+class FamNetApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
