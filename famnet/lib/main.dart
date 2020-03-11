@@ -11,6 +11,8 @@ class FamNetApp extends StatelessWidget {
     return new MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'To-do List',
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
         home: new TodoList()
     );
   }
