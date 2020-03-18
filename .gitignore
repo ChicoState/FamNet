@@ -14,6 +14,7 @@ google-services.json
 *.iml
 *.ipr
 *.iws
+*.properties
 .idea/
 .google
 # The .vscode folder contains launch configuration and tasks you configure in
