@@ -9,7 +9,7 @@
 .buildlog/
 .history
 .svn/
-famnet/google-services.json
+famnet/android/app/google-services.json
 # IntelliJ related
 *.iml
 *.ipr
