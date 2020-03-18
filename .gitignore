@@ -9,7 +9,7 @@
 .buildlog/
 .history
 .svn/
-google-services.json
+famnet/google-services.json
 # IntelliJ related
 *.iml
 *.ipr
