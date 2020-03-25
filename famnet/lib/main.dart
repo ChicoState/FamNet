@@ -1,6 +1,5 @@
 //Adapted from "Making a To-do App with Flutter" https://medium.com/the-web-tub/making-a-todo-app-with-flutter-5c63dab88190
 import 'package:flutter/material.dart';
-import 'widgets/todo.dart';
 import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
