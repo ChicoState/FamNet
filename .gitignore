@@ -4,11 +4,12 @@
 *.pyc
 *.swp
 .DS_Store
+.vscode/
 .atom/
 .buildlog/
 .history
 .svn/
-google-services.json
+famnet/android/app/google-services.json
 # IntelliJ related
 *.iml
 *.ipr
