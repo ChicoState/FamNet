@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'sign_in.dart';
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
@@ -78,6 +79,31 @@ class FirstScreen extends StatelessWidget {
           ),
         ),
       ),
+        floatingActionButton: FabCircularMenu(children:<Widget>[
+          IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
+          IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');})
+        ])
+    );
+  }
+}
+
+class menuApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+            body: Placeholder(),
+            floatingActionButton: FabCircularMenu(
+                children: <Widget>[
+                  IconButton(icon: Icon(Icons.home), onPressed: () {
+                    print('Home');
+                  }),
+                  IconButton(icon: Icon(Icons.favorite), onPressed: () {
+                    print('Favorite');
+                  })
+                ]
+            )
+        )
     );
   }
 }
