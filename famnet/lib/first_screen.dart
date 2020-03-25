@@ -81,29 +81,9 @@ class FirstScreen extends StatelessWidget {
       ),
         floatingActionButton: FabCircularMenu(children:<Widget>[
           IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
-          IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');})
+          IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
+          IconButton(icon:Icon(Icons.assignment), onPressed: () {print('ToDoList');})
         ])
-    );
-  }
-}
-
-class menuApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            body: Placeholder(),
-            floatingActionButton: FabCircularMenu(
-                children: <Widget>[
-                  IconButton(icon: Icon(Icons.home), onPressed: () {
-                    print('Home');
-                  }),
-                  IconButton(icon: Icon(Icons.favorite), onPressed: () {
-                    print('Favorite');
-                  })
-                ]
-            )
-        )
     );
   }
 }

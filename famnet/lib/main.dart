@@ -15,6 +15,7 @@ class FamNetApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData.dark(),
       home: LoginPage(),
     );
   }
