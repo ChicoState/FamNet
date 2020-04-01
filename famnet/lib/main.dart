@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'todo.dart';
 import 'poll.dart';
+import 'multi_form.dart';
 
 void main() => runApp(FamNetApp());
 
@@ -18,7 +19,7 @@ class FamNetApp extends StatelessWidget {
         appBar: AppBar(
           title: Text(appTitle),
         ),
-        body: MyCustomForm(),
+        body: MultiForm(),
       ),
     );
   }
