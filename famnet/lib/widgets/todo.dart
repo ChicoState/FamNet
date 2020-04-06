@@ -9,6 +9,7 @@ class TodoApp extends StatelessWidget {
     return new MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'To-do List',
+        darkTheme: ThemeData.dark(),
         home: new TodoList()
     );
   }
