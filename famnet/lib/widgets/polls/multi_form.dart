@@ -1,7 +1,10 @@
+//multi_form.dart
+//allows for creation, saving, deleting of multiple polls
+
 import 'package:flutter/material.dart';
-import 'package:famnet/empty_state.dart';
-import 'package:famnet/form.dart';
-import 'package:famnet/poll_content.dart';
+import 'package:famnet/widgets/polls/empty_state.dart';
+import 'package:famnet/widgets/polls/form.dart';
+import 'package:famnet/widgets/polls/poll_content.dart';
 
 class MultiForm extends StatefulWidget {
   @override
@@ -17,9 +20,9 @@ class _MultiFormState extends State<MultiForm> {
       appBar: AppBar(
         elevation: .0,
         leading: Icon(
-          Icons.wb_cloudy,
+          Icons.poll,
         ),
-        title: Text('REGISTER USERS'),
+        title: Text('Polls'),
         actions: <Widget>[
           FlatButton(
             child: Text('Save'),
@@ -32,8 +35,8 @@ class _MultiFormState extends State<MultiForm> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF30C1FF),
-              Color(0xFF2AA7DC),
+              Color(0X000000),
+              Color(0X000000),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -42,8 +45,8 @@ class _MultiFormState extends State<MultiForm> {
         child: polls.length <= 0
             ? Center(
                 child: EmptyState(
-                  title: 'Oops',
-                  message: 'Add form by tapping add button below',
+                  title: "Oops, you don't have any polls yet",
+                  message: 'Create a new poll by tapping add button below',
                 ),
               )
             : ListView.builder(
@@ -95,16 +98,14 @@ class _MultiFormState extends State<MultiForm> {
             fullscreenDialog: true,
             builder: (_) => Scaffold(
                   appBar: AppBar(
-                    title: Text('List of Users'),
+                    title: Text('List of Polls'),
                   ),
                   body: ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (_, i) => ListTile(
-                          leading: CircleAvatar(
-                            child: Text(data[i].group.substring(0, 1)),
-                          ),
                           title: Text(data[i].group),
                           subtitle: Text(data[i].topic),
+                          trailing: Text(data[i].option),
                         ),
                   ),
                 ),

@@ -1,4 +1,7 @@
-  
+//empty_state.dart
+//this is what is displayed if no polls have been created
+
+
 import 'package:flutter/material.dart';
 
 class EmptyState extends StatelessWidget {

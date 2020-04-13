@@ -1,4 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
+import 'package:firebase_database/firebase_database.dart';
+class TodoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return new MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'To-do List',
+        darkTheme: ThemeData.dark(),
+        home: new TodoList()
+    );
+  }
+}
 
 class TodoList extends StatefulWidget {
   @override
@@ -13,6 +28,7 @@ class TodoListState extends State<TodoList> {
     // Prevents empty strings from being added
     if(task.length > 0) {
       setState(() => _todoItems.add(task));
+      _saveData(new Tlist(false,task,true));
     }
   }
 
@@ -113,5 +129,32 @@ class TodoListState extends State<TodoList> {
           child: new Icon(Icons.add)
       ),
     );
+  }
+}
+final databaseReference = FirebaseDatabase.instance.reference();
+const jsonCodec=const JsonCodec();
+//Encodes data in json then sends it onto database
+void _saveData(Tlist list) async {
+  var json=jsonCodec.encode(list);
+      print("json=$json");
+      databaseReference.child("7").set(json);
+
+      /*var url="https://famnet-84c11.firebaseio.com/todo.json";
+      var httpClient = new Client();
+      var response = await httpClient.post(url, body:json);
+      print("response="+response.body);*/
+
+
+}
+//this class inteprets what the json will look like
+class Tlist {
+  bool finished;
+  String task;
+  bool inuse;
+
+  Tlist(this.finished,this.task,this.inuse);
+
+  Map toJson() {
+    return {"finished":finished,"task":task,"inuse":inuse};
   }
 }

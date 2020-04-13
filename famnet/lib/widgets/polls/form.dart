@@ -1,3 +1,6 @@
+//form.dart
+//builds each individual form for polls
+
 import 'package:flutter/material.dart';
 import 'package:famnet/poll_content.dart';
 
@@ -16,6 +19,7 @@ class PollForm extends StatefulWidget {
 
 class _PollFormState extends State<PollForm> {
   final form = GlobalKey<FormState>();
+  // final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +47,6 @@ class _PollFormState extends State<PollForm> {
                   )
                 ],
               ),
-              // Padding(
-              //   padding: EdgeInsets.only(left: 16, right: 16, top:16),
-              //   child: DropdownButtonFormField(
-              //     items: ,
-              //     ),
-              // ),
               Padding(
                 padding: EdgeInsets.only(left: 16, right: 16, top: 16),
                 child: TextFormField(
@@ -59,7 +57,7 @@ class _PollFormState extends State<PollForm> {
                   decoration: InputDecoration(
                     labelText: 'Group Name',
                     hintText: 'Select a group to post the poll in',
-                    icon: Icon(Icons.person),
+                    icon: Icon(Icons.group),
                     isDense: true,
                   ),
                 ),
@@ -70,11 +68,23 @@ class _PollFormState extends State<PollForm> {
                   initialValue: widget.poll.topic,
                   onSaved: (val) => widget.poll.topic = val,
                   validator: (val) =>
-                      val.contains('@') ? null : 'Email is invalid',
+                      val.length > 3 ? null : 'Maybe make your topic more descriptive!',
                   decoration: InputDecoration(
                     labelText: 'Topic or Question',
                     hintText: 'Enter a topic/question for the poll',
-                    icon: Icon(Icons.email),
+                    icon: Icon(Icons.assessment),
+                    isDense: true,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
+                child: TextFormField(
+                  onSaved: (val) => widget.poll.option = val,
+                  decoration: InputDecoration(
+                    labelText: 'Option ',
+                    hintText: 'Add a response option ',
+                    icon: Icon(Icons.create),
                     isDense: true,
                   ),
                 ),
