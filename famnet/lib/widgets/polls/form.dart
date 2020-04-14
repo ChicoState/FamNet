@@ -2,7 +2,8 @@
 //builds each individual form for polls
 
 import 'package:flutter/material.dart';
-import 'package:famnet/poll_content.dart';
+import 'package:famnet/widgets/polls/poll_content.dart';
+
 
 typedef OnDelete();
 
