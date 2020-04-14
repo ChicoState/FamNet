@@ -6,6 +6,18 @@ import 'package:famnet/widgets/polls/empty_state.dart';
 import 'package:famnet/widgets/polls/form.dart';
 import 'package:famnet/widgets/polls/poll_content.dart';
 
+class PollApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Multi Form',
+      darkTheme: ThemeData.dark(),
+      home: new MultiForm()
+    );
+  }
+}
+
 class MultiForm extends StatefulWidget {
   @override
   _MultiFormState createState() => _MultiFormState();
