@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
 
-class TodoApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    return new MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'To-do List',
-        darkTheme: ThemeData.dark(),
-        home: new TodoList()
-    );
-  }
-}
 
 class TodoList extends StatefulWidget {
   @override
