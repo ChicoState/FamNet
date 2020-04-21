@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'sign_in.dart';
 import 'widgets/todo.dart';
-import 'widgets/calendar.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 
 class FirstScreen extends StatelessWidget {
@@ -85,16 +84,7 @@ class FirstScreen extends StatelessWidget {
         floatingActionButton: FabCircularMenu(children:<Widget>[
           IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
           IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
-          IconButton(icon:Icon(Icons.assignment), onPressed: () {
-            Navigator.push(context, new MaterialPageRoute(
-              builder: (context) => TodoList()
-            ));
-          }),
-          IconButton(icon:Icon(Icons.calendar_today), onPressed: () {
-            Navigator.push(context, new MaterialPageRoute(
-                builder: (context) => Calendar()
-            ));
-          }),
+          IconButton(icon:Icon(Icons.assignment), onPressed: () { runApp(new TodoApp());})
         ])
     );
   }
