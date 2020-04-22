@@ -4,6 +4,7 @@ import 'login_page.dart';
 import 'sign_in.dart';
 import 'widgets/todo.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+import 'package:famnet/widgets/groups.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
@@ -85,7 +86,8 @@ class FirstScreen extends StatelessWidget {
           IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
           IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
           IconButton(icon:Icon(Icons.assignment), onPressed: () { runApp(new TodoApp());}),
-          IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new PollApp());})
+          IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new PollApp());}),
+          IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new Groups());})
         ])
     );
   }

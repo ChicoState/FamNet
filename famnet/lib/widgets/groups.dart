@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
     return posts;
   }
   Future navigateToAddGroups(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => add_groups()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => addGroups()));
   }
   @override
   Widget build(BuildContext context) {
