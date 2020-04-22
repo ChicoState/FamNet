@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
           header: Row(
             children: <Widget>[
               RaisedButton(
-                child: Text("add group"),
+                child: Text("Create group"),
                 onPressed: () {
                   navigateToAddGroups(context);
                 },

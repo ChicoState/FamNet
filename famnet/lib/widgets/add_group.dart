@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class addGroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class FormDemo extends StatefulWidget {
 
 class _FormDemoState extends State<FormDemo> {
   final _formKey = GlobalKey<FormState>();
-  final Map<String, dynamic> _formData = {'email': null, 'password': null};
+  final Map<String, dynamic> _formData = {'Gname': null, 'Description': null, 'Owner':null};
   final focusPassword = FocusNode();
 
   @override
@@ -43,19 +46,20 @@ class _FormDemoState extends State<FormDemo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _buildEmailField(),
-            _buildPasswordField(),
+            _buildNameField(),
+            _buildDescriptionField(),
+            _buildOwnerField(),
             _buildSubmitButton(),
           ],
         ));
   }
 
-  Widget _buildEmailField() {
+  Widget _buildNameField() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Email'),
+      decoration: InputDecoration(labelText: 'Group Name'),
       validator: (String value) {
         if(value=="")
-          return 'This is not a valid email';
+          return 'This is not a valid name';
       },
       onSaved: (String value) {
         _formData['email'] = value;
@@ -67,16 +71,33 @@ class _FormDemoState extends State<FormDemo> {
     );
   }
 
-  Widget _buildPasswordField() {
+  Widget _buildDescriptionField() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Password'),
+      decoration: InputDecoration(labelText: 'Short Description'),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Preencha a senha';
+          return "empty";
         }
       },
       onSaved: (String value) {
         _formData['password'] = value;
+      },
+      focusNode: focusPassword,
+      onFieldSubmitted: (v) {
+        _submitForm();
+      },
+    );
+  }
+  Widget _buildOwnerField() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Email of Owner'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return "empty";
+        }
+      },
+      onSaved: (String value) {
+        _formData['owner'] = value;
       },
       focusNode: focusPassword,
       onFieldSubmitted: (v) {
@@ -98,6 +119,29 @@ class _FormDemoState extends State<FormDemo> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       print(_formData);
+      //_saveData(new Gcreation(_formData['Gname'], _formData['Description'],_formData['Owner']));
+      Navigator.pop(context);
+
     }
+  }
+}
+final databaseReference = FirebaseDatabase.instance.reference();
+const jsonCodec=const JsonCodec();
+
+void _saveData(Gcreation group) async {
+  var json = jsonCodec.encode(group);
+  print("json=$json");
+  databaseReference.child("groups").push().set(json);
+}
+
+class Gcreation {
+  String Gname;
+  String Description;
+  String Owner;
+
+  Gcreation(this.Gname,this.Description ,this.Owner);
+
+  Map toJson() {
+    return {"Gname":Gname,"Description":Description,"Owner":Owner};
   }
 }
