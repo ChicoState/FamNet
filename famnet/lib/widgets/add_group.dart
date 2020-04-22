@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
 class addGroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,6 @@ class _FormDemoState extends State<FormDemo> {
           children: <Widget>[
             _buildNameField(),
             _buildDescriptionField(),
-            _buildOwnerField(),
             _buildSubmitButton(),
           ],
         ));
@@ -62,7 +60,7 @@ class _FormDemoState extends State<FormDemo> {
           return 'This is not a valid name';
       },
       onSaved: (String value) {
-        _formData['email'] = value;
+        _formData['Gname'] = value;
       },
       textInputAction: TextInputAction.next,
       onFieldSubmitted: (v) {
@@ -80,7 +78,7 @@ class _FormDemoState extends State<FormDemo> {
         }
       },
       onSaved: (String value) {
-        _formData['password'] = value;
+        _formData['Description'] = value;
       },
       focusNode: focusPassword,
       onFieldSubmitted: (v) {
@@ -88,24 +86,6 @@ class _FormDemoState extends State<FormDemo> {
       },
     );
   }
-  Widget _buildOwnerField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Email of Owner'),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return "empty";
-        }
-      },
-      onSaved: (String value) {
-        _formData['owner'] = value;
-      },
-      focusNode: focusPassword,
-      onFieldSubmitted: (v) {
-        _submitForm();
-      },
-    );
-  }
-
   Widget _buildSubmitButton() {
     return RaisedButton(
       onPressed: () {
@@ -119,7 +99,7 @@ class _FormDemoState extends State<FormDemo> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       print(_formData);
-      //_saveData(new Gcreation(_formData['Gname'], _formData['Description'],_formData['Owner']));
+      _saveData(new Gcreation(_formData['Gname'], _formData['Description']));
       Navigator.pop(context);
 
     }
@@ -129,8 +109,11 @@ final databaseReference = FirebaseDatabase.instance.reference();
 const jsonCodec=const JsonCodec();
 
 void _saveData(Gcreation group) async {
+  final FirebaseUser user = await _auth.currentUser();
+  final uid = user.uid;
+  group.setOwner(uid);
   var json = jsonCodec.encode(group);
-  print("json=$json");
+  //print("json=$json");
   databaseReference.child("groups").push().set(json);
 }
 
@@ -139,9 +122,18 @@ class Gcreation {
   String Description;
   String Owner;
 
-  Gcreation(this.Gname,this.Description ,this.Owner);
+  Gcreation(this.Gname,this.Description);
 
   Map toJson() {
     return {"Gname":Gname,"Description":Description,"Owner":Owner};
   }
+  void setOwner(String Owner)
+  {
+    this.Owner=Owner;
+  }
+}
+void inputData() async {
+  final FirebaseUser user = await _auth.currentUser();
+  final email = user.email;
+  print(email);
 }

@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'add_group.dart';
-import 'package:flappy_search_bar/scaled_tile.dart';
-import 'dart:math';
+final dbRef = FirebaseDatabase.instance.reference().child("groups");
 class Groups extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -37,7 +36,7 @@ class _HomeState extends State<Home> {
     if (text.length == 5) throw Error();
     if (text.length == 6) return [];
     List<Post> posts = [];
-
+    print(dbRef.orderByChild("gname").equalTo("$text").once());
     posts.add(Post("$text", "group 1"));
     return posts;
   }
@@ -171,6 +170,17 @@ void _saveData(Tlist list) async {
       print("response="+response.body);*/
 
 
+}
+class Gcreation {
+  String Gname;
+  String Description;
+  String Owner;
+
+  Gcreation(this.Gname,this.Description);
+
+  Map toJson() {
+    return {"Gname":Gname,"Description":Description,"Owner":Owner};
+  }
 }
 //this class inteprets what the json will look like
 class Tlist {
