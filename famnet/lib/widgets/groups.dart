@@ -42,7 +42,8 @@ class _HomeState extends State<Home> {
   Future<List<Post>> _getALlPosts(String text) async {
     print("BEFORE");
     var stuff = await FirebaseGroups.getTodo("$text");
-    print(stuff.Gname);
+    print("printing stuff");
+    print(stuff);
     print("After");
     if (text.length == 5) throw Error();
     if (text.length == 6) return [];
@@ -194,19 +195,29 @@ class add extends StatelessWidget {
 final databaseReference = FirebaseDatabase.instance.reference();
 const jsonCodec=const JsonCodec();
 
+
 class Gcreation {
   final String key;
-  String Gname;
+  /*String Gname;
   String Description;
-  String Owner;
+  String Owner;*/
+  List<Map> matchGroups;
 
   //Gcreation(this.Gname,this.Description);
 
   Gcreation.fromJson(this.key, Map data) {
-    print(data);
+    print(data.values);
+    for (var value in data.values) {
+      print(value);
+      if(value!=null) {
+        matchGroups.add(value);
+      }
+    }
+    print(matchGroups);
+    /*
     Gname = data['Gname'];
     if (Gname == null) {
-      print("gname is null");
+      print(Gname);
       Gname = '';
     }
     Description = data['Description'];
@@ -217,11 +228,16 @@ class Gcreation {
     if(Owner==null) {
       Owner=' ';
     }
-      }
-      String getOwner()
-      {
-        return Owner;
-      }
+    */
+  }
+}
+class Rgroups{
+  Map group;
+  Rgroups(Map value)
+  {
+    print("constructor called");
+    group=value;
+  }
 }
 //this class inteprets what the json will look like
 //FRANKENSTEIN
@@ -253,12 +269,11 @@ class FirebaseGroups {
     Completer<Gcreation> completer = new Completer<Gcreation>();
 
     ////String accountKey = await Preferences.getAccountKey();
-
     FirebaseDatabase.instance
         .reference()
         .child("groups")
-        //.orderByChild("Gname")
-        //.equalTo(todoKey)
+        .orderByChild("Gname")
+        .equalTo(todoKey)
         .once()
         .then((DataSnapshot snapshot) {
       var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
