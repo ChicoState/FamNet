@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'add_group.dart';
+import 'dart:async';
 final dbRef = FirebaseDatabase.instance.reference().child("groups");
 class Groups extends StatelessWidget {
   // This widget is the root of your application.
@@ -37,6 +38,21 @@ class _HomeState extends State<Home> {
     if (text.length == 6) return [];
     List<Post> posts = [];
     print(dbRef.orderByChild("gname").equalTo("$text").once());
+
+
+
+    //FRANKENSTEIN
+    /*
+    FirebaseGroups.getGrouptream("-KriJ8Sg4lWIoNswKWc4", _updateTodo)
+        .then((StreamSubscription s) => _subscriptionTodo = s);
+    super.initState();
+     */
+
+
+
+
+
+
     posts.add(Post("$text", "group 1"));
     return posts;
   }
@@ -158,39 +174,98 @@ class add extends StatelessWidget {
 */
 final databaseReference = FirebaseDatabase.instance.reference();
 const jsonCodec=const JsonCodec();
-//Encodes data in json then sends it onto database
-void _saveData(Tlist list) async {
-  var json=jsonCodec.encode(list);
-  print("json=$json");
-  databaseReference.child("todo").push().set(json);
 
-  /*var url="https://famnet-84c11.firebaseio.com/todo.json";
-      var httpClient = new Client();
-      var response = await httpClient.post(url, body:json);
-      print("response="+response.body);*/
-
-
-}
 class Gcreation {
   String Gname;
   String Description;
   String Owner;
 
-  Gcreation(this.Gname,this.Description);
+  //Gcreation(this.Gname,this.Description);
 
-  Map toJson() {
-    return {"Gname":Gname,"Description":Description,"Owner":Owner};
-  }
+  /*Gcreation.fromJson(this.key, Map data) {
+    Gname = data['Gname'];
+    if (Gname == null) {
+      Gname = '';
+    }
+    Description = data['Description'];
+    if (Description == null) {
+      Description = '';
+    }
+    Owner = data['Owner'];
+    if(Owner==null) {
+      Owner=' ';
+    }
+      }
+      */
 }
 //this class inteprets what the json will look like
-class Tlist {
-  bool finished;
-  String task;
-  bool inuse;
+/*
+//FRANKENSTEIN
+class FirebaseGroups {
+  /// FirebaseTodos.getTodoStream("-KriJ8Sg4lWIoNswKWc4", _updateTodo)
+  /// .then((StreamSubscription s) => _subscriptionTodo = s);
+  static Future<StreamSubscription<Event>> getTodoStream(String todoKey,
+      void onData(Todo todo)) async {
+    String accountKey = await Preferences.getAccountKey();
 
-  Tlist(this.finished,this.task,this.inuse);
+    StreamSubscription<Event> subscription = FirebaseDatabase.instance
+        .reference()
+        .child("accounts")
+        .child(accountKey)
+        .child("todos")
+        .child(todoKey)
+        .onValue
+        .listen((Event event) {
+      var todo = new Todo.fromJson(event.snapshot.key, event.snapshot.value);
+      onData(todo);
+    });
 
-  Map toJson() {
-    return {"finished":finished,"task":task,"inuse":inuse};
+    return subscription;
+  }
+  /// FirebaseTodos.getTodo("-KriJ8Sg4lWIoNswKWc4").then(_updateTodo);
+  static Future<Gcreation> getTodo(String todoKey) async {
+    Completer<Gcreation> completer = new Completer<Gcreation>();
+
+    //String accountKey = await Preferences.getAccountKey();
+
+    FirebaseDatabase.instance
+        .reference()
+        .child("groups")
+        .orderByChild("Gname")
+        .once()
+        .then((DataSnapshot snapshot) {
+      var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
+      completer.complete(groups);
+    });
+
+    return completer.future;
   }
 }
+
+
+
+
+
+
+class Preferences {
+  static const String ACCOUNT_KEY = "accountKey";
+
+  static Future<bool> setAccountKey(String accountKey) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(ACCOUNT_KEY, accountKey);
+    return prefs.commit();
+  }
+
+  static Future<String> getAccountKey() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String accountKey = prefs.getString(ACCOUNT_KEY);
+
+    // workaround - simulate a login setting this
+    if (accountKey == null) {
+      accountKey = "-KriFiUADpl-X07hnBC-";
+    }
+
+    return accountKey;
+  }
+}
+*/
