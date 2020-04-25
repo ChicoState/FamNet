@@ -31,14 +31,31 @@ class _HomeState extends State<Home> {
   final SearchBarController<Post> _searchBarController = SearchBarController();
   bool isReplay = false;
 
+
+
+  //Buffer function that will get the data from the db then pass it along to _getALlPosts
+ /* Future<List<Post>> getData(String text) async {
+    return FirebaseGroups.getTodo("$text").then(onValue);
+  }*/
+
+
   Future<List<Post>> _getALlPosts(String text) async {
     await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
     if (isReplay) return [Post("Replaying !", "Replaying body")];
     if (text.length == 5) throw Error();
     if (text.length == 6) return [];
     List<Post> posts = [];
-    print(dbRef.orderByChild("gname").equalTo("$text").once());
 
+    FirebaseGroups.getTodo("$text").then(DataSnapshot snapshot)
+    {
+
+    }
+    //getData("$text");
+    //dbRef.orderByChild("gname").equalTo("$text").once().then((DataSnapshot snapshot) {
+      //var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
+      //completer.complete(groups);
+    //})
+    //print();
 
 
     //FRANKENSTEIN
@@ -48,8 +65,8 @@ class _HomeState extends State<Home> {
     super.initState();
      */
 
-
-
+    //var something =
+    //FirebaseGroups.getTodo("$text").then(_updateTodo);
 
 
 
@@ -176,13 +193,14 @@ final databaseReference = FirebaseDatabase.instance.reference();
 const jsonCodec=const JsonCodec();
 
 class Gcreation {
+  final String key;
   String Gname;
   String Description;
   String Owner;
 
   //Gcreation(this.Gname,this.Description);
 
-  /*Gcreation.fromJson(this.key, Map data) {
+  Gcreation.fromJson(this.key, Map data) {
     Gname = data['Gname'];
     if (Gname == null) {
       Gname = '';
@@ -196,12 +214,11 @@ class Gcreation {
       Owner=' ';
     }
       }
-      */
 }
 //this class inteprets what the json will look like
-/*
 //FRANKENSTEIN
 class FirebaseGroups {
+  /*
   /// FirebaseTodos.getTodoStream("-KriJ8Sg4lWIoNswKWc4", _updateTodo)
   /// .then((StreamSubscription s) => _subscriptionTodo = s);
   static Future<StreamSubscription<Event>> getTodoStream(String todoKey,
@@ -222,16 +239,18 @@ class FirebaseGroups {
 
     return subscription;
   }
+  */
   /// FirebaseTodos.getTodo("-KriJ8Sg4lWIoNswKWc4").then(_updateTodo);
   static Future<Gcreation> getTodo(String todoKey) async {
     Completer<Gcreation> completer = new Completer<Gcreation>();
 
-    //String accountKey = await Preferences.getAccountKey();
+    ////String accountKey = await Preferences.getAccountKey();
 
     FirebaseDatabase.instance
         .reference()
         .child("groups")
         .orderByChild("Gname")
+        .equalTo(todoKey)
         .once()
         .then((DataSnapshot snapshot) {
       var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
