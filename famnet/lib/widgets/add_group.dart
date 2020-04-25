@@ -20,13 +20,14 @@ class addGroups extends StatelessWidget {
     Navigator.pop(context);
   }
 }
+//Holds the form information
 class FormDemo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _FormDemoState();
   }
 }
-
+//Creates the form. Can be exanded on.
 class _FormDemoState extends State<FormDemo> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {'Gname': null, 'Description': null, 'Owner':null};
@@ -94,7 +95,7 @@ class _FormDemoState extends State<FormDemo> {
       child: Text('SEND'),
     );
   }
-
+  //Saves the data and returns to previous screen
   void _submitForm() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -106,25 +107,22 @@ class _FormDemoState extends State<FormDemo> {
   }
 }
 final databaseReference = FirebaseDatabase.instance.reference();
-const jsonCodec=const JsonCodec();
 
 void _saveData(Gcreation group) async {
   final FirebaseUser user = await _auth.currentUser();
   final uid = user.uid;
   group.setOwner(uid);
-  //var json = jsonCodec.encode(group);
   var json = group.toJson();
-  //print("json=$json");
   databaseReference.child("groups").push().set(json);
 }
-
+//Class that holds groups information between user entering it and it being submitted.
 class Gcreation {
   String Gname;
   String Description;
   String Owner;
 
   Gcreation(this.Gname,this.Description);
-
+//Returns class as a map which can then be used to send as json
   Map toJson() {
     return {"Gname":Gname,"Description":Description,"Owner":Owner};
   }
@@ -132,9 +130,4 @@ class Gcreation {
   {
     this.Owner=Owner;
   }
-}
-void inputData() async {
-  final FirebaseUser user = await _auth.currentUser();
-  final email = user.email;
-  print(email);
 }

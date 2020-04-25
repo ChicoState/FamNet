@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'add_group.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
 final dbRef = FirebaseDatabase.instance.reference().child("groups");
 class Groups extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Search Groups',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      darkTheme: ThemeData.dark(),
       home: Home(),
     );
   }
@@ -31,49 +34,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final SearchBarController<Post> _searchBarController = SearchBarController();
 
-
-
-  //Buffer function that will get the data from the db then pass it along to _getALlPosts
- /* Future<List<Post>> getData(String text) async {
-    return FirebaseGroups.getTodo("$text").then(onValue);
-  }*/
-
-
+  //Calls get groups and then populates the search bar with all values retrieved from DB query
   Future<List<Post>> _getALlPosts(String text) async {
-    print("BEFORE");
-    var stuff = await FirebaseGroups.getTodo("$text");
-    print("printing stuff");
-    print(stuff);
-    print("After");
-    if (text.length == 5) throw Error();
-    if (text.length == 6) return [];
+    var glist = await FirebaseGroups.getGroups("$text");
     List<Post> posts = [];
-
-    //FirebaseGroups.getTodo("$text").then(DataSnapshot snapshot)
-    //{
-
-    ////}
-    //getData("$text");
-    //dbRef.orderByChild("gname").equalTo("$text").once().then((DataSnapshot snapshot) {
-      //var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
-      //completer.complete(groups);
-    //})
-    //print();
-
-
-    //FRANKENSTEIN
-    /*
-    FirebaseGroups.getGrouptream("-KriJ8Sg4lWIoNswKWc4", _updateTodo)
-        .then((StreamSubscription s) => _subscriptionTodo = s);
-    super.initState();
-     */
-
-    //var something =
-    //FirebaseGroups.getTodo("$text").then(_updateTodo);
-
-
-
-    posts.add(Post("$text", "group 1"));
+    var myList=glist.matchGroups;
+    for(var i=0;i<myList.length;i++){
+      var tgroup=myList[i];
+      posts.add(Post(tgroup["Gname"], tgroup["Description"]));
+    }
     return posts;
   }
   Future navigateToAddGroups(context) async {
@@ -99,19 +68,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   navigateToAddGroups(context);
                 },
-              ),/*
-              RaisedButton(
-                child: Text("Desort"),
-                onPressed: () {
-                  _searchBarController.removeSort();
-                }
-              RaisedButton/
-                child: Text("Replay"),
-                onPressed: () {
-                  isReplay = !isReplay;
-                  _searchBarController.replayLastSearch();
-                },
-              ),*/
+              ),
             ],
           ),
           onCancelled: () {
@@ -138,7 +95,7 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
+//This class can be edited to better display contents when clicked
 class Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -163,85 +120,25 @@ class add extends StatelessWidget {
     return Container();
   }
 }
-
-/*class _Group extends StatefulWidget {
-  @override
-}*/
-
-/*  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Todo List'),
-        actions: <Widget>[
-          //empty button that does nothing
-          IconButton(
-            onPressed: null,
-            icon: Icon(Icons.adb),
-          ),
-        ],
-      ),
-
-      body: _buildTodoList(),
-      floatingActionButton: new FloatingActionButton(
-          onPressed: _pushAddTodoScreen, // pressing this button now opens the new screen
-          tooltip: 'Add task',
-          child: new Icon(Icons.add)
-      ),
-    );
-  }
-}
-*/
-final databaseReference = FirebaseDatabase.instance.reference();
-const jsonCodec=const JsonCodec();
-
-
+//A class that holds a list of maps of the retrieved json values. Not really sure what to do with the key
+//but it may be important later?
 class Gcreation {
   final String key;
-  /*String Gname;
-  String Description;
-  String Owner;*/
-  List<Map> matchGroups;
+  List<Map> matchGroups= List<Map>();
 
-  //Gcreation(this.Gname,this.Description);
-
+//Takes the values from the datasnapshot and places them in the list
   Gcreation.fromJson(this.key, Map data) {
-    print(data.values);
     for (var value in data.values) {
-      print(value);
+      //print(value);
       if(value!=null) {
-        matchGroups.add(value);
+        var tmap=Map.from(value);
+        matchGroups.add(Map.from(tmap));
       }
     }
-    print(matchGroups);
-    /*
-    Gname = data['Gname'];
-    if (Gname == null) {
-      print(Gname);
-      Gname = '';
-    }
-    Description = data['Description'];
-    if (Description == null) {
-      Description = '';
-    }
-    Owner = data['Owner'];
-    if(Owner==null) {
-      Owner=' ';
-    }
-    */
   }
 }
-class Rgroups{
-  Map group;
-  Rgroups(Map value)
-  {
-    print("constructor called");
-    group=value;
-  }
-}
-//this class inteprets what the json will look like
-//FRANKENSTEIN
 class FirebaseGroups {
+  //Following code is how to implement queries as a stream rather than a single touch. Leaving in as reference.
   /*
   /// FirebaseTodos.getTodoStream("-KriJ8Sg4lWIoNswKWc4", _updateTodo)
   /// .then((StreamSubscription s) => _subscriptionTodo = s);
@@ -265,10 +162,12 @@ class FirebaseGroups {
   }
   */
   /// FirebaseTodos.getTodo("-KriJ8Sg4lWIoNswKWc4").then(_updateTodo);
-  static Future<Gcreation> getTodo(String todoKey) async {
+  /// This function queries the db once to retrieve group info
+  static Future<Gcreation> getGroups(String todoKey) async {
     Completer<Gcreation> completer = new Completer<Gcreation>();
 
     ////String accountKey = await Preferences.getAccountKey();
+    /*Important!!! The following lines are a single query and can be placed on one line */
     FirebaseDatabase.instance
         .reference()
         .child("groups")
@@ -287,7 +186,7 @@ class FirebaseGroups {
 
 
 
-
+//Leaving in this code as a reference. May be important later
 /*
 class Preferences {
   static const String ACCOUNT_KEY = "accountKey";
