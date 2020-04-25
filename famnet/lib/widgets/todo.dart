@@ -1,14 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:famnet/sign_in.dart';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 class TodoList extends StatefulWidget {
   @override
   createState() => new TodoListState();
 }
 
 class TodoListState extends State<TodoList> {
+
+  String _email = email;
   List<String> _todoItems = [];
 
   // This will be called each time the + button is pressed
@@ -123,9 +129,14 @@ final databaseReference = FirebaseDatabase.instance.reference();
 const jsonCodec=const JsonCodec();
 //Encodes data in json then sends it onto database
 void _saveData(Tlist list) async {
-  var json=jsonCodec.encode(list);
-      print("json=$json");
-      databaseReference.child("7").set(json);
+  //var json=jsonCodec.encode(list);
+  final FirebaseUser user = await _auth.currentUser();
+  final uid = user.uid;
+  var json = list.toJson();
+  databaseReference.child("todo").push().set(json);
+
+//      print("json=$json");
+//      databaseReference.child("7").set(json);
 
       /*var url="https://famnet-84c11.firebaseio.com/todo.json";
       var httpClient = new Client();
