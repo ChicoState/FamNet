@@ -3,8 +3,17 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'sign_in.dart';
 import 'widgets/todo.dart';
+import 'widgets/calendar.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:famnet/widgets/groups.dart';
+
+
+final tab = new TabBar(tabs: <Tab>[
+    new Tab(icon: new Icon(Icons.account_circle)),
+    new Tab(icon: new Icon(Icons.rss_feed)),
+    new Tab(icon: new Icon(Icons.group)),
+]);
+
 
 class FirstScreen extends StatelessWidget {
   @override
@@ -45,7 +54,8 @@ class FirstScreen extends StatelessWidget {
                     color: Colors.deepPurple,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10
+              ),
               Text(
                 'EMAIL',
                 style: TextStyle(
@@ -84,10 +94,25 @@ class FirstScreen extends StatelessWidget {
       ),
         floatingActionButton: FabCircularMenu(children:<Widget>[
           IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
+//          IconButton(icon:Icon(Icons.home), onPressed:() {})
           IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
-          IconButton(icon:Icon(Icons.assignment), onPressed: () { runApp(new TodoApp());}),
           IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new PollApp());}),
-          IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new Groups());})
+          IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new Groups());}),
+          IconButton(icon:Icon(Icons.assignment), onPressed: () {
+            Navigator.push(context, new MaterialPageRoute(
+              builder: (context) => TodoList()
+            ));
+          },),
+          IconButton(icon:Icon(Icons.poll), onPressed: () {
+            Navigator.push(context, new MaterialPageRoute(
+                builder: (context) => PollApp()
+            ));
+          },),
+          IconButton(icon:Icon(Icons.calendar_today), onPressed: () {
+            Navigator.push(context, new MaterialPageRoute(
+                builder: (context) => Calendar()
+            ));
+          },),
         ])
     );
   }
