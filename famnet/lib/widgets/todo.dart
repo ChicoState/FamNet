@@ -4,16 +4,18 @@ import 'package:http/http.dart';
 import 'package:famnet/sign_in.dart';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+GoogleSignInAccount currentUser = googleSignIn.currentUser;
+String user = currentUser.id;
 class TodoList extends StatefulWidget {
   @override
   createState() => new TodoListState();
 }
 
 class TodoListState extends State<TodoList> {
-
   String _email = email;
   List<String> _todoItems = [];
 
@@ -131,7 +133,6 @@ const jsonCodec=const JsonCodec();
 void _saveData(Tlist list) async {
   //var json=jsonCodec.encode(list);
   final FirebaseUser user = await _auth.currentUser();
-  final uid = user.uid;
   var json = list.toJson();
   databaseReference.child("todo").push().set(json);
 
@@ -147,13 +148,14 @@ void _saveData(Tlist list) async {
 }
 //this class inteprets what the json will look like
 class Tlist {
+  String uid = user;
   bool finished;
   String task;
-  bool inuse;
+  bool inUse;
 
-  Tlist(this.finished,this.task,this.inuse);
+  Tlist(this.finished,this.task,this.inUse);
 
   Map toJson() {
-    return {"finished":finished,"task":task,"inuse":inuse};
+    return {"id":user,"finished":finished,"task":task,"inuse":inUse};
   }
 }
