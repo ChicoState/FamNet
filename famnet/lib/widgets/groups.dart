@@ -38,10 +38,12 @@ class _HomeState extends State<Home> {
   Future<List<Post>> _getALlPosts(String text) async {
     var glist = await FirebaseGroups.getGroups("$text");
     List<Post> posts = [];
-    var myList=glist.matchGroups;
-    for(var i=0;i<myList.length;i++){
-      var tgroup=myList[i];
-      posts.add(Post(tgroup["Gname"], tgroup["Description"]));
+    if(glist.hasData==1) {
+      var myList = glist.matchGroups;
+      for (var i = 0; i < myList.length; i++) {
+        var tgroup = myList[i];
+        posts.add(Post(tgroup["Gname"], tgroup["Description"]));
+      }
     }
     return posts;
   }
@@ -124,17 +126,23 @@ class add extends StatelessWidget {
 //but it may be important later?
 class Gcreation {
   final String key;
+  var hasData=1;
   List<Map> matchGroups= List<Map>();
 
 //Takes the values from the datasnapshot and places them in the list
   Gcreation.fromJson(this.key, Map data) {
-    for (var value in data.values) {
-      //print(value);
-      if(value!=null) {
-        var tmap=Map.from(value);
-        matchGroups.add(Map.from(tmap));
+    if (data != null) {
+      for (var value in data.values) {
+        if (value != null) {
+          var tmap = Map.from(value);
+          matchGroups.add(Map.from(tmap));
+        }
       }
     }
+    else
+      {
+        hasData=0;
+      }
   }
 }
 class FirebaseGroups {
