@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'add_group.dart';
 import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 final dbRef = FirebaseDatabase.instance.reference().child("groups");
 class Groups extends StatelessWidget {
   // This widget is the root of your application.
@@ -29,7 +30,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final SearchBarController<Post> _searchBarController = SearchBarController();
-  bool isReplay = false;
 
 
 
@@ -40,16 +40,18 @@ class _HomeState extends State<Home> {
 
 
   Future<List<Post>> _getALlPosts(String text) async {
-    await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
-    if (isReplay) return [Post("Replaying !", "Replaying body")];
+    print("BEFORE");
+    var stuff = await FirebaseGroups.getTodo("$text");
+    print(stuff.Gname);
+    print("After");
     if (text.length == 5) throw Error();
     if (text.length == 6) return [];
     List<Post> posts = [];
 
-    FirebaseGroups.getTodo("$text").then(DataSnapshot snapshot)
-    {
+    //FirebaseGroups.getTodo("$text").then(DataSnapshot snapshot)
+    //{
 
-    }
+    ////}
     //getData("$text");
     //dbRef.orderByChild("gname").equalTo("$text").once().then((DataSnapshot snapshot) {
       //var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
@@ -201,8 +203,10 @@ class Gcreation {
   //Gcreation(this.Gname,this.Description);
 
   Gcreation.fromJson(this.key, Map data) {
+    print(data);
     Gname = data['Gname'];
     if (Gname == null) {
+      print("gname is null");
       Gname = '';
     }
     Description = data['Description'];
@@ -213,6 +217,10 @@ class Gcreation {
     if(Owner==null) {
       Owner=' ';
     }
+      }
+      String getOwner()
+      {
+        return Owner;
       }
 }
 //this class inteprets what the json will look like
@@ -249,8 +257,8 @@ class FirebaseGroups {
     FirebaseDatabase.instance
         .reference()
         .child("groups")
-        .orderByChild("Gname")
-        .equalTo(todoKey)
+        //.orderByChild("Gname")
+        //.equalTo(todoKey)
         .once()
         .then((DataSnapshot snapshot) {
       var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
@@ -265,7 +273,7 @@ class FirebaseGroups {
 
 
 
-
+/*
 class Preferences {
   static const String ACCOUNT_KEY = "accountKey";
 
@@ -286,5 +294,4 @@ class Preferences {
 
     return accountKey;
   }
-}
-*/
+}*/
