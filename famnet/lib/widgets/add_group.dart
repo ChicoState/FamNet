@@ -112,7 +112,8 @@ void _saveData(Gcreation group) async {
   final FirebaseUser user = await _auth.currentUser();
   final uid = user.uid;
   group.setOwner(uid);
-  var json = jsonCodec.encode(group);
+  //var json = jsonCodec.encode(group);
+  var json = group.toJson();
   //print("json=$json");
   databaseReference.child("groups").push().set(json);
 }
