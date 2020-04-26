@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:famnet/sign_in.dart';
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
+GoogleSignInAccount currentUser = googleSignIn.currentUser;
+String TUID = currentUser.id;
+
 class addGroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -114,6 +118,12 @@ void _saveData(Gcreation group) async {
   group.setOwner(uid);
   var json = group.toJson();
   databaseReference.child("groups").push().set(json);
+  String newkey = databaseReference.child("groupData").push().key;
+  databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
+  String UID= TUID;
+  databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
+  print("The user is " +TUID);
+  print("The key is " + newkey);
 }
 //Class that holds groups information between user entering it and it being submitted.
 class Gcreation {
