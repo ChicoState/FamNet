@@ -1,13 +1,24 @@
+//import 'dart:js';
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'package:flutter/rendering.dart';
+import 'package:famnet/first_screen.dart';
 import 'add_group.dart';
 import 'dart:async';
+import 'dart:core';
+
+var r;
+
 final dbRef = FirebaseDatabase.instance.reference().child("groups");
 class Groups extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    r = MediaQuery.of(context).size;
     return MaterialApp(
       title: 'Search Groups',
       theme: ThemeData(
@@ -25,6 +36,8 @@ class Post {
 
   Post(this.title, this.body);
 }
+
+Post gPost;
 
 class Home extends StatefulWidget {
   @override
@@ -64,12 +77,17 @@ class _HomeState extends State<Home> {
           cancellationWidget: Text("Cancel"),
           emptyWidget: Text("empty"),
           header: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               RaisedButton(
                 child: Text("Create group"),
                 onPressed: () {
                   navigateToAddGroups(context);
                 },
+              ),
+              RaisedButton(
+                child: Text("Cancel"),
+                onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => FirstScreen())); },
               ),
             ],
           ),
@@ -87,6 +105,7 @@ class _HomeState extends State<Home> {
                 isThreeLine: true,
                 subtitle: Text(post.body),
                 onTap: () {
+                  gPost = post;
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
                 },
               ),
@@ -102,24 +121,75 @@ class Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white70,
+        ),
+        title: Text(
+          gPost.title,
+          style: TextStyle(
+            color: Colors.white70,
+          ),
+        ),
+        backgroundColor: Colors.blueGrey,
+      ),
       body: SafeArea(
-        child: Column(
+        top: true,
+        left: true,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
+            Card(
+              elevation: 5,
+              color: Colors.blueGrey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical:8.0, horizontal: 50),
+                child: Row(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Icon(Icons.group),
+                        Text("Group Description : ", style: TextStyle(fontSize: 24,color: Colors.white70, fontWeight: FontWeight.bold)),
+                        SizedBox(height:40),
+                        Text(gPost.body, style: TextStyle(fontSize: 24,color: Colors.white70)),
+                      ]
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Text("Detail"),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        //                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
+        onPressed: () {
+          /*  TODO :  This needs to go to add so that we can send the information to the database
+          *   TODO :  and I'm not sure how we're going to do that.
+          */
+//          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
+          },
+        elevation: 10.0,
+        backgroundColor: Colors.blueGrey,
+        icon: Icon(
+          Icons.add
+        ),
+        label: Text("Add Group"),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
 class add extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      /*
+       * TODO : Fill out this, it will not be a Container, might need to make the groups page first.
+       */
+    );
   }
 }
 //A class that holds a list of maps of the retrieved json values. Not really sure what to do with the key

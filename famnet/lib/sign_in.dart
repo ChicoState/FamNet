@@ -1,11 +1,18 @@
+import 'dart:collection';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'dart:collection';
+
+Queue q;
 
 final databaseReference = FirebaseDatabase.instance.reference();
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
+
+var groups = {};
 String authId;
 String name;
 String email;
@@ -46,6 +53,7 @@ Future<String> signInWithGoogle() async {
   final FirebaseUser currentUser = await _auth.currentUser();
   assert(user.uid == currentUser.uid);
 
+  databaseReference.child("users").update({"UID":authId});
   return 'signInWithGoogle succeeded: $user';
 }
 
@@ -53,4 +61,15 @@ void signOutGoogle() async {
   await googleSignIn.signOut();
 
   print("User Sign Out");
+}
+
+
+class userData {
+  String userDataUid = authId;
+  Queue userGroups;
+  userData(this.userGroups);
+
+  Map toJson() {
+    return {"User_ID":userDataUid, "groups_apart":userGroups};
+  }
 }
