@@ -6,7 +6,7 @@ import 'package:famnet/sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignInAccount currentUser = googleSignIn.currentUser;
-String user = currentUser.id;
+String TUID = currentUser.id;
 
 class addGroups extends StatelessWidget {
   @override
@@ -120,7 +120,9 @@ void _saveData(Gcreation group) async {
   databaseReference.child("groups").push().set(json);
   String newkey = databaseReference.child("groupData").push().key;
   databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
-  databaseReference.child("groupData").child(newkey).push().set({"UID":user});
+  String UID= TUID;
+  databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
+  print("The user is " +TUID);
   print("The key is " + newkey);
 }
 //Class that holds groups information between user entering it and it being submitted.
