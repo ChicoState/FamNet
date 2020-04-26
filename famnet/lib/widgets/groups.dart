@@ -50,6 +50,7 @@ class _HomeState extends State<Home> {
   Future navigateToAddGroups(context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => addGroups()));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
