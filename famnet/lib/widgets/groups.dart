@@ -251,7 +251,9 @@ class FirebaseGroups {
         .reference()
         .child("groups")
         .orderByChild("Gname")
-        .equalTo(todoKey)
+        .startAt(todoKey)
+        .endAt(todoKey+"~")
+        //.equalTo(todoKey)
         .once()
         .then((DataSnapshot snapshot) {
       var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
