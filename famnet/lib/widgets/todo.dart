@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:famnet/sign_in.dart';
-import 'dart:convert';
+//import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:famnet/first_screen.dart';
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-//GoogleSignInAccount currentUser = googleSignIn.currentUser;
-//String userId = currentUser.id;
 class TodoList extends StatefulWidget {
   @override
   createState() => new TodoListState();
