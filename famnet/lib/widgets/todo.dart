@@ -134,20 +134,11 @@ void _saveData(Tlist list) async {
   //var json=jsonCodec.encode(list);
   final FirebaseUser user = await _auth.currentUser();
   var json = list.toJson();
-  databaseReference.child("todo").push().set(json);
-
-//      print("json=$json");
-//      databaseReference.child("7").set(json);
-      /*var url="https://famnet-84c11.firebaseio.com/todo.json";
-      var httpClient = new Client();
-      var response = await httpClient.post(url, body:json);
-      print("response="+response.body);*/
-
-
+  databaseReference.child("todo").push().update(json);
 }
 //this class inteprets what the json will look like
 class Tlist {
-  String uid = user;
+  String toDoID = userId;
   bool finished;
   String task;
   bool inUse;
@@ -155,6 +146,6 @@ class Tlist {
   Tlist(this.finished,this.task,this.inUse);
 
   Map toJson() {
-    return {"id":user,"finished":finished,"task":task,"inuse":inUse};
+    return {"id":toDoID,"finished":finished,"task":task,"inuse":inUse};
   }
 }
