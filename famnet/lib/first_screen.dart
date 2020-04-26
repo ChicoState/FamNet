@@ -6,7 +6,11 @@ import 'widgets/todo.dart';
 import 'widgets/calendar.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:famnet/widgets/groups.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+
+GoogleSignInAccount currentUser = googleSignIn.currentUser;
+String userId = currentUser.id;
 
 final tab = new TabBar(tabs: <Tab>[
     new Tab(icon: new Icon(Icons.account_circle)),
@@ -40,6 +44,15 @@ class FirstScreen extends StatelessWidget {
                 backgroundColor: Colors.transparent,
               ),
               SizedBox(height: 40),
+//              Text(
+//                'User ID : ',
+//                style: TextStyle(
+//                  fontSize: 15,
+//                  fontWeight: FontWeight.bold,
+//                  color: Colors.black26,
+//                )
+//              ),
+//              Text(userId,style: TextStyle(fontSize: 15, color: Colors.deepOrange),),
               Text(
                 'NAME',
                 style: TextStyle(
