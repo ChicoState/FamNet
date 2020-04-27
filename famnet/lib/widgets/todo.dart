@@ -1,27 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:famnet/sign_in.dart';
+//import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
+<<<<<<< HEAD
 
 class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+=======
+import 'package:famnet/first_screen.dart';
+>>>>>>> upstream/master
 
-    return new MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'To-do List',
-        darkTheme: ThemeData.dark(),
-        home: new TodoList()
-    );
-  }
-}
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
 class TodoList extends StatefulWidget {
   @override
   createState() => new TodoListState();
 }
 
 class TodoListState extends State<TodoList> {
+  String _email = email;
   List<String> _todoItems = [];
 
   // This will be called each time the + button is pressed
@@ -133,29 +132,24 @@ class TodoListState extends State<TodoList> {
   }
 }
 final databaseReference = FirebaseDatabase.instance.reference();
-const jsonCodec=const JsonCodec();
+//const jsonCodec=const JsonCodec();
 //Encodes data in json then sends it onto database
 void _saveData(Tlist list) async {
-  var json=jsonCodec.encode(list);
-      print("json=$json");
-      databaseReference.child("7").set(json);
-
-      /*var url="https://famnet-84c11.firebaseio.com/todo.json";
-      var httpClient = new Client();
-      var response = await httpClient.post(url, body:json);
-      print("response="+response.body);*/
-
-
+  //var json=jsonCodec.encode(list);
+  final FirebaseUser user = await _auth.currentUser();
+  var json = list.toJson();
+  databaseReference.child("todo").push().set(json);
 }
 //this class inteprets what the json will look like
 class Tlist {
+  String jsonId = userId;
   bool finished;
   String task;
-  bool inuse;
+  bool inUse;
 
-  Tlist(this.finished,this.task,this.inuse);
+  Tlist(this.finished,this.task,this.inUse);
 
   Map toJson() {
-    return {"finished":finished,"task":task,"inuse":inuse};
+    return {"id":jsonId,"finished":finished,"task":task,"inuse":inUse};
   }
 }
