@@ -6,13 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:famnet/widgets/polls/poll_content.dart';
 
 typedef OnDelete();
+typedef OnAddOption();
 
 class PollForm extends StatefulWidget {
   final Poll poll;
   final state = _PollFormState();
   final OnDelete onDelete;
+  final OnAddOption onAddOption;
 
-  PollForm({Key key, this.poll, this.onDelete}) : super(key: key);
+  PollForm({Key key, this.poll, this.onDelete, this.onAddOption}) : super(key: key);
   @override
   _PollFormState createState() => state;
   bool isValid() => state.validate();
@@ -21,7 +23,8 @@ class PollForm extends StatefulWidget {
 class _PollFormState extends State<PollForm> {
   final form = GlobalKey<FormState>();
   // final myController = TextEditingController();
-
+  List<Widget> _options = [];
+  int _count = 1;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -81,8 +84,10 @@ class _PollFormState extends State<PollForm> {
               Padding(
                 padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
                 child: TextFormField(
-                  // widget.poll.options.add("meme"),
-                  onSaved: (val) => widget.poll.option = val,
+                  onSaved: (val) {
+                    addOption(val);
+                    widget.poll.option = val;
+                  },
                   decoration: InputDecoration(
                     labelText: 'Option ',
                     hintText: 'Add a response option ',
@@ -90,7 +95,17 @@ class _PollFormState extends State<PollForm> {
                     isDense: true,
                   ),
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: _addNewOption,
+                ),
               )
+              // IconButton(
+              //   icon: Icon(Icons.add),
+              //   onPressed: _addNewOption,)
             ],
           ),
         ),
@@ -98,10 +113,23 @@ class _PollFormState extends State<PollForm> {
     );
   }
 
+  void _addNewOption() {
+    print("meme");
+    setState(() {
+      widget.poll.options.add("");
+    });
+  }
   ///form validator
   bool validate() {
     var valid = form.currentState.validate();
     if (valid) form.currentState.save();
     return valid;
   }
+
+  void addOption(String option) {
+    setState(() => widget.poll.options.add(option));
+    print(widget.poll.options[0]);
+  }
 }
+
+

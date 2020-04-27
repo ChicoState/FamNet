@@ -11,7 +11,10 @@ class PollApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Multi Form',
+      title: 'Polls',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       darkTheme: ThemeData.dark(),
       home: new MultiForm()
     );
@@ -86,6 +89,13 @@ class _MultiFormState extends State<MultiForm> {
     });
   }
 
+  void onAddOption() {
+    print("meme");
+    setState(() {
+      
+    });
+  }
+
   ///on add form
   void onAddForm() {
     setState(() {
@@ -117,7 +127,7 @@ class _MultiFormState extends State<MultiForm> {
                     itemBuilder: (_, i) => ListTile(
                           title: Text(data[i].group),
                           subtitle: Text(data[i].topic),
-                          trailing: Text(data[i].option),
+                          trailing: Text(data[i].options[0]),
                         ),
                   ),
                 ),
