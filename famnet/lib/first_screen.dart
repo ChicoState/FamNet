@@ -108,12 +108,12 @@ class FirstScreen extends StatelessWidget {
         ),
       ),
         floatingActionButton: FabCircularMenu(children:<Widget>[
-          IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
-          IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
-          IconButton(icon:Icon(Icons.assignment), onPressed: () { runApp(new TodoApp());}),
-          IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new PollApp());}),
-//          IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
-//          IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
+          // IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
+          // IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
+          // IconButton(icon:Icon(Icons.assignment), onPressed: () { runApp(new TodoApp());}),
+          // IconButton(icon:Icon(Icons.poll), onPressed: () {runApp(new PollApp());}),
+          // IconButton(icon:Icon(Icons.home), onPressed:() {print('Home');}),
+          //  IconButton(icon:Icon(Icons.favorite), onPressed: () {print('Favorite');}),
           IconButton(icon:Icon(Icons.group), onPressed: () {/*runApp(new Groups());*/
             Navigator.push(context, new MaterialPageRoute(builder: (context) => Groups()
             ));
