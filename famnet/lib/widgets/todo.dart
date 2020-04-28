@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:famnet/sign_in.dart';
 //import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
+<<<<<<< HEAD
+
+class TodoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+=======
 import 'package:famnet/first_screen.dart';
+>>>>>>> upstream/master
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
