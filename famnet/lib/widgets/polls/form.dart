@@ -84,15 +84,10 @@ class _PollFormState extends State<PollForm> {
               Padding(
                 padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
                 child: TextFormField(
-<<<<<<< HEAD
                   onSaved: (val) {
                     addOption(val);
                     widget.poll.option = val;
                   },
-=======
-                  // widget.poll.options.add("meme"),
-                  onSaved: (val) => widget.poll.option = val,
->>>>>>> upstream/master
                   decoration: InputDecoration(
                     labelText: 'Option ',
                     hintText: 'Add a response option ',

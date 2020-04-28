@@ -11,14 +11,10 @@ class PollApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
       title: 'Polls',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-=======
-      title: 'Multi Form',
->>>>>>> upstream/master
       darkTheme: ThemeData.dark(),
       home: new MultiForm()
     );
