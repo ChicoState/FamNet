@@ -56,10 +56,11 @@ class _HomeState extends State<Home> {
       print("looking at keymap");
       print(glist.keyMap);
       var Valist = glist.matchGroups;
+      var Klist=glist.keyMap;
       for (var i = 0; i < Valist.length; i++) {
         var tgroup = Valist[i];
-        var key= glist.keyMap[i];
-        posts.add(Post(tgroup["Gname"], tgroup["Description"],key));
+        print(Klist[i]);
+        posts.add(Post(tgroup["Gname"], tgroup["Description"],Klist[i]));
       }
     }
     return posts;
@@ -176,7 +177,7 @@ class Detail extends StatelessWidget {
           */
 //          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
         //_save_data
-          print(gPost.body);
+          print(gPost.gid);
           },
         elevation: 10.0,
         backgroundColor: Colors.blueGrey,
@@ -212,7 +213,6 @@ class Gcreation {
     if(data!=null) {
       data.entries.forEach((e) {
         if(e!=null) {
-          print("before pushing");
           var vmap = Map.from(e.value);
           var kmap = e.key;
           matchGroups.add(Map.from(vmap));
