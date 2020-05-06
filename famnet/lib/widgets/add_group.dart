@@ -121,6 +121,7 @@ void _saveData(Gcreation group) async {
   databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
   String UID= TUID;
   databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
+
 }
 //Class that holds groups information between user entering it and it being submitted.
 class Gcreation {
