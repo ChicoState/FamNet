@@ -33,9 +33,9 @@ class Groups extends StatelessWidget {
 class Post {
   final String title;
   final String body;
-  //final String gid;
+  final String gid;
 
-  Post(this.title, this.body);
+  Post(this.title, this.body,this.gid);
 }
 
 Post gPost;
@@ -55,11 +55,11 @@ class _HomeState extends State<Home> {
     if(glist.hasData==1) {
       print("looking at keymap");
       print(glist.keyMap);
-      var myList = glist.matchGroups;
-      for (var i = 0; i < myList.length; i++) {
-        var tgroup = myList[i];
-        print(myList);
-        posts.add(Post(tgroup["Gname"], tgroup["Description"]));
+      var Valist = glist.matchGroups;
+      for (var i = 0; i < Valist.length; i++) {
+        var tgroup = Valist[i];
+        var key= glist.keyMap[i];
+        posts.add(Post(tgroup["Gname"], tgroup["Description"],key));
       }
     }
     return posts;
@@ -176,7 +176,7 @@ class Detail extends StatelessWidget {
           */
 //          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
         //_save_data
-          print(gPost);
+          print(gPost.body);
           },
         elevation: 10.0,
         backgroundColor: Colors.blueGrey,
@@ -205,11 +205,25 @@ class Gcreation {
   final String key;
   var hasData=1;
   List<Map> matchGroups= List<Map>();
-  List<Map> keyMap = List<Map>();
+  List<String> keyMap = List<String>();
 
 //Takes the values from the datasnapshot and places them in the list
   Gcreation.fromJson(this.key, Map data) {
-    print(data.keys);
+    if(data!=null) {
+      data.entries.forEach((e) {
+        if(e!=null) {
+          print("before pushing");
+          var vmap = Map.from(e.value);
+          var kmap = e.key;
+          matchGroups.add(Map.from(vmap));
+          keyMap.add(kmap);
+        }
+      });
+    }
+    else{
+      hasData=0;
+    }
+    /*
     if (data != null) {
       for (var value in data.values) {
         if (value != null) {
@@ -222,7 +236,7 @@ class Gcreation {
     else
       {
         hasData=0;
-      }
+      }*/
       /*for (var key in data.keys) {
         if (key != null) {
           var tmap = Map.from(key);
