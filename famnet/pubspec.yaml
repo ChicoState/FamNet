@@ -14,9 +14,10 @@ description: A family networking tool
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
+  http:
   flutter:
     sdk: flutter
   table_calendar: ^2.2.3
@@ -30,12 +31,17 @@ dependencies:
   google_sign_in: ^4.0.4
   firebase_database: ^3.1.1
   cloud_firestore: ^0.12.9+5
-  flappy_search_bar: 1.7.2
+  flappy_search_bar: ^1.7.2
   shared_preferences: ^0.5.7
+  firebase_auth_mocks:
+  google_sign_in_mocks: 
+  dio:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test:
+  mockito:
 
 
 # For information on the generic Dart part of this file, see the

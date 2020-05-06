@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _signInButton() {
     return OutlineButton(
+      key: new Key('login'),
       splashColor: Colors.grey,
       onPressed: () {
         signInWithGoogle().whenComplete(() {
@@ -52,11 +53,15 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+            Image(
+              key: new Key('google_logo'),
+              image: AssetImage("assets/google_logo.png"), height: 35.0
+              ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 'Sign in with Google',
+                key: new Key('sign_in_google'),
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.grey,

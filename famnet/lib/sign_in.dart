@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'dart:collection';
 
 Queue q;
 
@@ -17,6 +16,8 @@ String authId;
 String name;
 String email;
 String imageUrl;
+
+
 
 Future<String> signInWithGoogle() async {
   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
@@ -35,13 +36,16 @@ Future<String> signInWithGoogle() async {
   assert(user.uid != null);
   assert(user.email != null);
   assert(user.displayName != null);
-  assert(user.photoUrl != null);
-
+  if(user.photoUrl == null){
+    imageUrl = "https://www.google.com/logos/doodles/2020/stay-and-play-at-home-with-popular-past-google-doodles-halloween-2016-6753651837108773-s.png";
+  }
+  else{
+    imageUrl = user.photoUrl;
+  }
   authId = user.uid;
   name = user.displayName;
   email = user.email;
-  imageUrl = user.photoUrl;
-
+  
   // Only taking the first part of the name, i.e., First Name
   if (name.contains(" ")) {
     name = name.substring(0, name.indexOf(" "));
