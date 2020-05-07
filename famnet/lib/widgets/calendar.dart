@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:http/http.dart';
+// import 'dart:convert';
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatefulWidget {
@@ -21,7 +21,10 @@ class CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Calendar'),
+        title: new Text(
+          'Calendar',
+          key: new Key('calendar')
+          ),
         actions: <Widget>[
           //empty button that does nothing
           IconButton(

@@ -36,6 +36,7 @@ Future<String> signInWithGoogle() async {
   assert(user.uid != null);
   assert(user.email != null);
   assert(user.displayName != null);
+  //This isn't working as intended, revisit to try to get this to work with testing.
   if(user.photoUrl == null){
     imageUrl = "https://www.google.com/logos/doodles/2020/stay-and-play-at-home-with-popular-past-google-doodles-halloween-2016-6753651837108773-s.png";
   }

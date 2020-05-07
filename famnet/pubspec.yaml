@@ -33,13 +33,14 @@ dependencies:
   cloud_firestore: ^0.12.9+5
   flappy_search_bar: ^1.7.2
   shared_preferences: ^0.5.7
+  # This is the section for testing deps.
   firebase_auth_mocks:
   google_sign_in_mocks: 
-  dio:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Testing Deps
   test:
   mockito:
 

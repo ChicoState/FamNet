@@ -39,6 +39,7 @@ class FirstScreen extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 key: new Key('avatar'),
+                //To Do : Create a dynamic image that if the picture returns null it is the famnet logo.
                 backgroundImage: AssetImage(
                   "assets/famnet_logo.png"
                 ),
