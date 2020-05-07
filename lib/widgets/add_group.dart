@@ -103,7 +103,6 @@ class _FormDemoState extends State<FormDemo> {
   void _submitForm() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      print(_formData);
       _saveData(new Gcreation(_formData['Gname'], _formData['Description']));
       Navigator.pop(context);
 
@@ -117,6 +116,7 @@ void _saveData(Gcreation group) async {
   final uid = user.uid;
   group.setOwner(uid);
   var json = group.toJson();
+
   databaseReference.child("groups").push().set(json);
   String newkey = databaseReference.child("groupData").push().key;
   databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});

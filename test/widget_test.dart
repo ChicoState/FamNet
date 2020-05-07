@@ -57,7 +57,7 @@ void main() {
     email = "test@testies.test";
 
     await tester.pumpWidget(buildTestableWidget(FirstScreen()));    
-    
+   
     expect(find.byType(Text), findsWidgets);
     expect(find.byKey(new Key("name")), findsOneWidget);
     expect(find.byKey(new Key("email")), findsOneWidget);
