@@ -21,7 +21,10 @@ class CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Calendar'),
+        title: new Text(
+          'Calendar',
+          key: new Key('calendar')
+          ),
         actions: <Widget>[
           //empty button that does nothing
           IconButton(

@@ -176,8 +176,6 @@ class Detail extends StatelessWidget {
           *   TODO :  and I'm not sure how we're going to do that.
           */
 //          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
-        //_save_data
-          print(gPost.gid);
           },
         elevation: 10.0,
         backgroundColor: Colors.blueGrey,
@@ -231,7 +229,6 @@ class Gcreation {
           matchGroups.add(Map.from(tmap));
         }
       }
-
     }
     else
       {
@@ -263,7 +260,6 @@ void _saveData(Gcreation group) async {
   String UID= TUID;
   databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
 }*/
-
 class FirebaseGroups {
   //Following code is how to implement queries as a stream rather than a single touch. Leaving in as reference.
   /*
