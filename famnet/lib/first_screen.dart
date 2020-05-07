@@ -1,4 +1,5 @@
 import 'package:famnet/widgets/polls/multi_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'sign_in.dart';
@@ -37,8 +38,9 @@ class FirstScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               CircleAvatar(
-                backgroundImage: NetworkImage(
-                  imageUrl,
+                key: new Key('avatar'),
+                backgroundImage: AssetImage(
+                  "assets/famnet_logo.png"
                 ),
                 radius: 60,
                 backgroundColor: Colors.transparent,
@@ -55,6 +57,7 @@ class FirstScreen extends StatelessWidget {
 //              Text(userId,style: TextStyle(fontSize: 15, color: Colors.deepOrange),),
               Text(
                 'NAME',
+                key: new Key('name'),
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -71,6 +74,7 @@ class FirstScreen extends StatelessWidget {
               ),
               Text(
                 'EMAIL',
+                key: new Key('email'),
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -85,6 +89,7 @@ class FirstScreen extends StatelessWidget {
               ),
               SizedBox(height: 40),
               RaisedButton(
+                key: new Key('signout'),
                 onPressed: () {
                   signOutGoogle();
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();

@@ -34,7 +34,8 @@ class TodoListState extends State<TodoList> {
             builder: (context) {
               return new Scaffold(
                   appBar: new AppBar(
-                      title: new Text('Add a new task')
+                      title: new Text('Add a new task'),
+                      key: new Key('todo_appbar')
                   ),
                   body: new TextField(
                     autofocus: true,
