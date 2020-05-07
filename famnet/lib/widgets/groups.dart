@@ -33,8 +33,9 @@ class Groups extends StatelessWidget {
 class Post {
   final String title;
   final String body;
+  final String gid;
 
-  Post(this.title, this.body);
+  Post(this.title, this.body,this.gid);
 }
 
 Post gPost;
@@ -52,10 +53,14 @@ class _HomeState extends State<Home> {
     var glist = await FirebaseGroups.getGroups("$text");
     List<Post> posts = [];
     if(glist.hasData==1) {
-      var myList = glist.matchGroups;
-      for (var i = 0; i < myList.length; i++) {
-        var tgroup = myList[i];
-        posts.add(Post(tgroup["Gname"], tgroup["Description"]));
+      print("looking at keymap");
+      print(glist.keyMap);
+      var Valist = glist.matchGroups;
+      var Klist=glist.keyMap;
+      for (var i = 0; i < Valist.length; i++) {
+        var tgroup = Valist[i];
+        print(Klist[i]);
+        posts.add(Post(tgroup["Gname"], tgroup["Description"],Klist[i]));
       }
     }
     return posts;
@@ -171,6 +176,8 @@ class Detail extends StatelessWidget {
           *   TODO :  and I'm not sure how we're going to do that.
           */
 //          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
+        //_save_data
+          print(gPost.gid);
           },
         elevation: 10.0,
         backgroundColor: Colors.blueGrey,
@@ -199,9 +206,24 @@ class Gcreation {
   final String key;
   var hasData=1;
   List<Map> matchGroups= List<Map>();
+  List<String> keyMap = List<String>();
 
 //Takes the values from the datasnapshot and places them in the list
   Gcreation.fromJson(this.key, Map data) {
+    if(data!=null) {
+      data.entries.forEach((e) {
+        if(e!=null) {
+          var vmap = Map.from(e.value);
+          var kmap = e.key;
+          matchGroups.add(Map.from(vmap));
+          keyMap.add(kmap);
+        }
+      });
+    }
+    else{
+      hasData=0;
+    }
+    /*
     if (data != null) {
       for (var value in data.values) {
         if (value != null) {
@@ -209,13 +231,39 @@ class Gcreation {
           matchGroups.add(Map.from(tmap));
         }
       }
+
+    }
+    else
+      {
+        hasData=0;
+      }*/
+      /*for (var key in data.keys) {
+        if (key != null) {
+          var tmap = Map.from(key);
+          keyMap.add(Map.from(tmap));
+        }
+      }
     }
     else
       {
         hasData=0;
       }
+      */
   }
 }
+/*
+void _saveData(Gcreation group) async {
+  final FirebaseUser user = await _auth.currentUser();
+  final uid = user.uid;
+  group.setOwner(uid);
+  var json = group.toJson();
+  databaseReference.child("groups").push().set(json);
+  String newkey = databaseReference.child("groupData").push().key;
+  databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
+  String UID= TUID;
+  databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
+}*/
+
 class FirebaseGroups {
   //Following code is how to implement queries as a stream rather than a single touch. Leaving in as reference.
   /*
