@@ -13,6 +13,7 @@ before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 script:
+  - cd famnet
   - ./flutter/bin/flutter test
 cache:
   directories:
