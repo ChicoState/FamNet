@@ -37,7 +37,11 @@ class CalendarState extends State<Calendar> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            TableCalendar(calendarController: _controller,)
+            TableCalendar(
+              headerStyle: HeaderStyle(
+                formatButtonShowsNext: false,
+              ),
+              calendarController: _controller,)
           ],
         )
       )
