@@ -173,7 +173,6 @@ class Detail extends StatelessWidget {
           /*  TODO :  This needs to go to add so that we can send the information to the database
           *   TODO :  and I'm not sure how we're going to do that.
           */
-          //print(gPost.gid);
           _saveData(gPost);
 //          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
           },
@@ -221,31 +220,31 @@ class Gcreation {
     else{
       hasData=0;
     }
-    /*
-    if (data != null) {
-      for (var value in data.values) {
-        if (value != null) {
-          var tmap = Map.from(value);
-          matchGroups.add(Map.from(tmap));
+  }
+}
+class Users {
+  final String key;
+  var hasData=1;
+  List<String> myUsers= List<String>();
+
+//Takes the values from the datasnapshot and places them in the list
+  Users.fromJson(this.key, Map data) {
+    if(data!=null) {
+      for(var value  in data.values) {
+        myUsers.add(value["uid"]);
+      }
         }
-      }
-    }
-    else
-      {
-        hasData=0;
-      }*/
-      /*for (var key in data.keys) {
-        if (key != null) {
-          var tmap = Map.from(key);
-          keyMap.add(Map.from(tmap));
+      /*data.entries.forEach((e) {
+        if(e!=null) {
+          print(e.value);
+          var vmap = Map.from(e.value);
+          myUsers.add(Map.from(vmap));
         }
-      }
+      });
+    }*/
+    else{
+      hasData=0;
     }
-    else
-      {
-        hasData=0;
-      }
-      */
   }
 }
 GoogleSignInAccount currentUser = googleSignIn.currentUser;
@@ -255,7 +254,28 @@ String TUID = currentUser.id;
 
 void _saveData(Post post) async {
   final uid = TUID;
-  databaseReference.child("groupData").child(gPost.gid).child("UIDS").push().set({"uid":uid});//allows the same person to belong to the group multiple times
+  final groupName=gPost.gid;
+  var glist = await FirebaseGroups.getGroupMembers("$groupName");
+  var duplicate=0;
+  if(glist.hasData==1)
+  {
+    var ulist=glist.myUsers;
+    for(var i=0;i<ulist.length;i++)
+      {
+        if(ulist[i]==uid)
+          {
+            duplicate=1;
+          }
+
+      }
+  }
+  if(duplicate==0) {
+    databaseReference.child("groupData").child(gPost.gid).child("UIDS")
+        .push()
+        .set({
+      "uid": uid
+    }); //allows the same person to belong to the group multiple times
+  }
 }
 class FirebaseGroups {
   //Following code is how to implement queries as a stream rather than a single touch. Leaving in as reference.
@@ -288,6 +308,7 @@ class FirebaseGroups {
 
     ////String accountKey = await Preferences.getAccountKey();
     /*Important!!! The following lines are a single query and can be placed on one line */
+
     FirebaseDatabase.instance
         .reference()
         .child("groups")
@@ -298,6 +319,24 @@ class FirebaseGroups {
         .once()
         .then((DataSnapshot snapshot) {
       var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
+      completer.complete(groups);
+    });
+
+    return completer.future;
+  }
+  static Future<Users> getGroupMembers(String group) async {
+    Completer<Users> completer = new Completer<Users>();
+
+    ////String accountKey = await Preferences.getAccountKey();
+    /*Important!!! The following lines are a single query and can be placed on one line */
+    FirebaseDatabase.instance
+        .reference()
+        .child("groupData")
+        .child(group)
+        .child("UIDS")
+        .once()
+        .then((DataSnapshot snapshot) {
+      var groups = new Users.fromJson(snapshot.key, snapshot.value);
       completer.complete(groups);
     });
 
