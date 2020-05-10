@@ -70,6 +70,7 @@ class CalendarState extends State<Calendar> {
           children: <Widget>[
             TableCalendar(
               events: _events,
+              key: new Key("table calender"),
               headerStyle: HeaderStyle(
                 formatButtonShowsNext: false,
               ),
@@ -110,6 +111,7 @@ class CalendarState extends State<Calendar> {
       builder: (context) => AlertDialog(
         title: new Text(
           'Add event',
+          key:new Key("add_event"),
         ),
         content: TextField(
           controller: _eventController,
@@ -117,6 +119,7 @@ class CalendarState extends State<Calendar> {
         actions: <Widget>[
           FlatButton(
             child: Text("Save"),
+            key: new Key("save"),
             onPressed:(){
               if(_eventController.text.isEmpty) return;
               setState(() {
