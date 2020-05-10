@@ -1,6 +1,6 @@
 //import 'dart:js';
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -10,7 +10,8 @@ import 'package:famnet/first_screen.dart';
 import 'add_group.dart';
 import 'dart:async';
 import 'dart:core';
-
+import 'package:famnet/sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 var r;
 
 final dbRef = FirebaseDatabase.instance.reference().child("groups");
@@ -53,13 +54,10 @@ class _HomeState extends State<Home> {
     var glist = await FirebaseGroups.getGroups("$text");
     List<Post> posts = [];
     if(glist.hasData==1) {
-      print("looking at keymap");
-      print(glist.keyMap);
       var Valist = glist.matchGroups;
       var Klist=glist.keyMap;
       for (var i = 0; i < Valist.length; i++) {
         var tgroup = Valist[i];
-        print(Klist[i]);
         posts.add(Post(tgroup["Gname"], tgroup["Description"],Klist[i]));
       }
     }
@@ -175,6 +173,8 @@ class Detail extends StatelessWidget {
           /*  TODO :  This needs to go to add so that we can send the information to the database
           *   TODO :  and I'm not sure how we're going to do that.
           */
+          //print(gPost.gid);
+          _saveData(gPost);
 //          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
           },
         elevation: 10.0,
@@ -248,18 +248,15 @@ class Gcreation {
       */
   }
 }
-/*
-void _saveData(Gcreation group) async {
-  final FirebaseUser user = await _auth.currentUser();
-  final uid = user.uid;
-  group.setOwner(uid);
-  var json = group.toJson();
-  databaseReference.child("groups").push().set(json);
-  String newkey = databaseReference.child("groupData").push().key;
-  databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
-  String UID= TUID;
-  databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
-}*/
+GoogleSignInAccount currentUser = googleSignIn.currentUser;
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final databaseReference = FirebaseDatabase.instance.reference();
+String TUID = currentUser.id;
+
+void _saveData(Post post) async {
+  final uid = TUID;
+  databaseReference.child("groupData").child(gPost.gid).child("UIDS").push().set({"uid":uid});//allows the same person to belong to the group multiple times
+}
 class FirebaseGroups {
   //Following code is how to implement queries as a stream rather than a single touch. Leaving in as reference.
   /*

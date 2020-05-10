@@ -114,16 +114,14 @@ final databaseReference = FirebaseDatabase.instance.reference();
 void _saveData(Gcreation group) async {
   final FirebaseUser user = await _auth.currentUser();
   final uid = user.uid;
-  group.setOwner(uid);
+  String UID= TUID;
+  group.setOwner(UID);
   var json = group.toJson();
 
   databaseReference.child("groups").push().set(json);
   String newkey = databaseReference.child("groupData").push().key;
   databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
-  String UID= TUID;
   databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
-  print("The user is " +TUID);
-  print("The key is " + newkey);
 }
 //Class that holds groups information between user entering it and it being submitted.
 class Gcreation {
