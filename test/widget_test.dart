@@ -6,8 +6,10 @@
 
 // import 'dart:js_util';
 
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:famnet/widgets/groups.dart';
 import 'package:famnet/widgets/add_group.dart';
+import 'package:famnet/widgets/polls/multi_form.dart';
 import 'package:famnet/widgets/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -99,4 +101,11 @@ void main() {
     await tester.pumpWidget(buildTestableWidget(addGroups()));
     expect(find.byType(AppBar), findsOneWidget);
   });
+  testWidgets('poll test.', (WidgetTester tester) async{
+    await tester.pumpWidget(buildTestableWidget(PollApp()));
+    expect(find.byType(AppBar), findsOneWidget);
+    await tester.tap(find.byType(IconButton));
+    expect(find.byType(Text), findsNWidgets(4));
+  });
+
 }
