@@ -106,9 +106,10 @@ void main() {
     expect(find.byType(Text), findsNWidgets(4));
   });
 
-  testWidgets('poll form test', (WidgetTester tester) async{
-    //await tester.pumpWidget(buildTestableWidget(PollForm()));
-    //expect(find.byType(TextFormField), findsNothing);
-  });
+  // testWidgets('poll form test', (WidgetTester tester) async{
+  //   Poll testpoll;ZZZ
+  //   await tester.pumpWidget(buildTestableWidget(PollForm()));
+  //   expect(find.byType(TextFormField), findsNothing);
+  // });
 
 }
