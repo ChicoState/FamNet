@@ -85,8 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
-<<<<<<< HEAD:famnet/pubspec.lock
-=======
   csslib:
     dependency: transitive
     description:
@@ -94,7 +92,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
->>>>>>> 3e021ce013ba21ddc050316b5968e7fcbcd370f3:pubspec.lock
   fab_circular_menu:
     dependency: "direct main"
     description:
@@ -534,25 +531,14 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD:famnet/pubspec.lock
-<<<<<<< HEAD
-=======
-    version: "0.2.11"
-=======
     version: "0.2.15"
->>>>>>> 3e021ce013ba21ddc050316b5968e7fcbcd370f3:pubspec.lock
   test_core:
     dependency: transitive
     description:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD:famnet/pubspec.lock
->>>>>>> 224ee4b07420c31c7399f0a33c906938e807e73d
-    version: "0.2.15"
-=======
     version: "0.3.4"
->>>>>>> 3e021ce013ba21ddc050316b5968e7fcbcd370f3:pubspec.lock
   typed_data:
     dependency: transitive
     description:
@@ -601,14 +587,7 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD:famnet/pubspec.lock
-<<<<<<< HEAD
     version: "3.6.1"
-=======
-    version: "3.5.0"
-=======
-    version: "3.6.1"
->>>>>>> 3e021ce013ba21ddc050316b5968e7fcbcd370f3:pubspec.lock
   yaml:
     dependency: transitive
     description:
@@ -616,7 +595,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
->>>>>>> 224ee4b07420c31c7399f0a33c906938e807e73d
 sdks:
   dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"
