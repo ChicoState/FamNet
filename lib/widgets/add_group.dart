@@ -20,10 +20,6 @@ class addGroups extends StatelessWidget {
       body: FormDemo(),
     );
   }
-
-  void backToMainPage(context) {
-    Navigator.pop(context);
-  }
 }
 //Holds the form information
 class FormDemo extends StatefulWidget {

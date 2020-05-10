@@ -72,6 +72,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Groups"
+        ),
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon:Icon(Icons.arrow_back),
+          onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => FirstScreen())); },
+        ),
+      ),
       body: SafeArea(
         key: new Key("safearea"),
 
@@ -92,10 +101,6 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   navigateToAddGroups(context);
                 },
-              ),
-              RaisedButton(
-                child: Text("Cancel"),
-                onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => FirstScreen())); },
               ),
             ],
           ),
@@ -133,7 +138,7 @@ class Detail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Colors.white70,
+          color: Colors.black12,
         ),
         title: Text(
           gPost.title,
