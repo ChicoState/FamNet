@@ -92,7 +92,7 @@ void main() {
     expect(find.byKey(new Key("safearea")), findsOneWidget);
     //await tester.enterText(find.byType(TextField), 'TEST');
     await tester.tap(find.byKey(new Key("adab")));
-    expect(find.byType(Container), findsWidgets);
+    expect(find.byType(Container), findsNWidgets(5));
   });
 
   testWidgets('add_group call test', (WidgetTester tester) async{
