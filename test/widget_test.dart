@@ -4,6 +4,9 @@
  * 
  */
 
+import 'package:famnet/widgets/groups.dart';
+import 'package:famnet/widgets/add_group.dart';
+import 'package:famnet/widgets/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../lib/first_screen.dart';
@@ -73,5 +76,18 @@ void main() {
     expect(find.byKey(new Key("calendar")), findsOneWidget);
     expect(find.byType(Text), findsWidgets);
   
+  });
+
+  testWidgets('todo call test', (WidgetTester tester) async{
+    await tester.pumpWidget(buildTestableWidget(TodoList()));
+
+  });
+
+  testWidgets('groups call test.', (WidgetTester tester) async{
+     await tester.pumpWidget(buildTestableWidget(Groups()));
+  });
+
+  testWidgets('add_group call test', (WidgetTester tester) async{
+    await tester.pumpWidget(buildTestableWidget(addGroups()));
   });
 }
