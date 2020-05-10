@@ -4,14 +4,12 @@
  * 
  */
 
-// import 'dart:js_util';
-
-import 'package:fab_circular_menu/fab_circular_menu.dart';
-import 'package:famnet/widgets/groups.dart';
-import 'package:famnet/widgets/add_group.dart';
-import 'package:famnet/widgets/polls/multi_form.dart';
-import 'package:famnet/widgets/todo.dart';
 import 'package:flutter/material.dart';
+import 'package:famnet/widgets/groups.dart';
+import 'package:famnet/widgets/todo.dart';
+import 'package:famnet/widgets/add_group.dart';
+import 'package:famnet/widgets/polls/form.dart';
+import 'package:famnet/widgets/polls/multi_form.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../lib/first_screen.dart';
 import '../lib/login_page.dart';
@@ -106,6 +104,11 @@ void main() {
     expect(find.byType(AppBar), findsOneWidget);
     await tester.tap(find.byType(IconButton));
     expect(find.byType(Text), findsNWidgets(4));
+  });
+
+  testWidgets('poll form test', (WidgetTester tester) async{
+    await tester.pumpWidget(buildTestableWidget(PollForm()));
+    expect(find.byType(TextFormField), findsOneWidget);
   });
 
 }
