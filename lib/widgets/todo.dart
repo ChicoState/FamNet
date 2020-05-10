@@ -107,6 +107,7 @@ class TodoListState extends State<TodoList> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Todo List'),
+        key: new Key("todo_list"),
         actions: <Widget>[
           //empty button that does nothing
           IconButton(
@@ -118,6 +119,7 @@ class TodoListState extends State<TodoList> {
 
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
+          key: new Key("add_task"),
           onPressed: _pushAddTodoScreen, // pressing this button now opens the new screen
           tooltip: 'Add task',
           child: new Icon(Icons.add)

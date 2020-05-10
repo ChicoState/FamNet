@@ -80,7 +80,10 @@ void main() {
 
   testWidgets('todo call test', (WidgetTester tester) async{
     await tester.pumpWidget(buildTestableWidget(TodoList()));
-
+    expect(find.byKey(new Key("todo_list")), findsOneWidget);
+    expect(find.byType(AppBar), findsOneWidget);
+    expect(find.byKey(new Key("add_task")), findsOneWidget);
+    expect(find.byType(FloatingActionButton), findsOneWidget);
   });
 
   testWidgets('groups call test.', (WidgetTester tester) async{
