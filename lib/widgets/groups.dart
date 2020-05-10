@@ -1,6 +1,6 @@
 //import 'dart:js';
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -10,7 +10,8 @@ import 'package:famnet/first_screen.dart';
 import 'add_group.dart';
 import 'dart:async';
 import 'dart:core';
-
+import 'package:famnet/sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 var r;
 
 final dbRef = FirebaseDatabase.instance.reference().child("groups");
@@ -53,13 +54,10 @@ class _HomeState extends State<Home> {
     var glist = await FirebaseGroups.getGroups("$text");
     List<Post> posts = [];
     if(glist.hasData==1) {
-      print("looking at keymap");
-      print(glist.keyMap);
       var Valist = glist.matchGroups;
       var Klist=glist.keyMap;
       for (var i = 0; i < Valist.length; i++) {
         var tgroup = Valist[i];
-        print(Klist[i]);
         posts.add(Post(tgroup["Gname"], tgroup["Description"],Klist[i]));
       }
     }
@@ -184,6 +182,7 @@ class Detail extends StatelessWidget {
           /*  TODO :  This needs to go to add so that we can send the information to the database
           *   TODO :  and I'm not sure how we're going to do that.
           */
+          _saveData(gPost);
 //          Navigator.of(context).push(MaterialPageRoute(builder: (context) => add()));
           },
         elevation: 10.0,
@@ -230,45 +229,63 @@ class Gcreation {
     else{
       hasData=0;
     }
-    /*
-    if (data != null) {
-      for (var value in data.values) {
-        if (value != null) {
-          var tmap = Map.from(value);
-          matchGroups.add(Map.from(tmap));
-        }
-      }
-    }
-    else
-      {
-        hasData=0;
-      }*/
-      /*for (var key in data.keys) {
-        if (key != null) {
-          var tmap = Map.from(key);
-          keyMap.add(Map.from(tmap));
-        }
-      }
-    }
-    else
-      {
-        hasData=0;
-      }
-      */
   }
 }
-/*
-void _saveData(Gcreation group) async {
-  final FirebaseUser user = await _auth.currentUser();
-  final uid = user.uid;
-  group.setOwner(uid);
-  var json = group.toJson();
-  databaseReference.child("groups").push().set(json);
-  String newkey = databaseReference.child("groupData").push().key;
-  databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
-  String UID= TUID;
-  databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
-}*/
+class Users {
+  final String key;
+  var hasData=1;
+  List<String> myUsers= List<String>();
+
+//Takes the values from the datasnapshot and places them in the list
+  Users.fromJson(this.key, Map data) {
+    if(data!=null) {
+      for(var value  in data.values) {
+        myUsers.add(value["uid"]);
+      }
+        }
+      /*data.entries.forEach((e) {
+        if(e!=null) {
+          print(e.value);
+          var vmap = Map.from(e.value);
+          myUsers.add(Map.from(vmap));
+        }
+      });
+    }*/
+    else{
+      hasData=0;
+    }
+  }
+}
+GoogleSignInAccount currentUser = googleSignIn.currentUser;
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final databaseReference = FirebaseDatabase.instance.reference();
+String TUID = currentUser.id;
+
+void _saveData(Post post) async {
+  final uid = TUID;
+  final groupName=gPost.gid;
+  var glist = await FirebaseGroups.getGroupMembers("$groupName");
+  var duplicate=0;
+  if(glist.hasData==1)
+  {
+    var ulist=glist.myUsers;
+    for(var i=0;i<ulist.length;i++)
+      {
+        if(ulist[i]==uid)
+          {
+            duplicate=1;
+          }
+
+      }
+  }
+  if(duplicate==0) {
+    databaseReference.child("groupData").child(gPost.gid).child("UIDS")
+        .push()
+        .set({
+      "uid": uid
+    }); //allows the same person to belong to the group multiple times
+  }
+}
 class FirebaseGroups {
   //Following code is how to implement queries as a stream rather than a single touch. Leaving in as reference.
   /*
@@ -300,6 +317,7 @@ class FirebaseGroups {
 
     ////String accountKey = await Preferences.getAccountKey();
     /*Important!!! The following lines are a single query and can be placed on one line */
+
     FirebaseDatabase.instance
         .reference()
         .child("groups")
@@ -310,6 +328,24 @@ class FirebaseGroups {
         .once()
         .then((DataSnapshot snapshot) {
       var groups = new Gcreation.fromJson(snapshot.key, snapshot.value);
+      completer.complete(groups);
+    });
+
+    return completer.future;
+  }
+  static Future<Users> getGroupMembers(String group) async {
+    Completer<Users> completer = new Completer<Users>();
+
+    ////String accountKey = await Preferences.getAccountKey();
+    /*Important!!! The following lines are a single query and can be placed on one line */
+    FirebaseDatabase.instance
+        .reference()
+        .child("groupData")
+        .child(group)
+        .child("UIDS")
+        .once()
+        .then((DataSnapshot snapshot) {
+      var groups = new Users.fromJson(snapshot.key, snapshot.value);
       completer.complete(groups);
     });
 
