@@ -85,7 +85,7 @@ class CalendarState extends State<Calendar> {
               child: InkWell(
                 splashColor: Colors.blue,
                 onTap: (){
-                  print('tapped');
+                  _showRemoveDialog(event);
                 },
                 child: ListTile(
                   title: Text(event),
@@ -105,6 +105,31 @@ class CalendarState extends State<Calendar> {
     );
   }
 
+  _showRemoveDialog(dynamic event) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: new Text(
+            'Remove event "$event"?',
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Confirm"),
+              onPressed:(){
+                Navigator.pop(context);
+                setState(() {
+                  _events[_controller.selectedDay].remove(event);
+                });
+                prefs.setString("events", json.encode(encodeMap(_events)));
+                },
+            )
+          ],
+        )
+    );
+  }
+
+
+
   _showAddDialog() {
     showDialog(
       context: context,
@@ -121,17 +146,17 @@ class CalendarState extends State<Calendar> {
             child: Text("Save"),
             key: new Key("save"),
             onPressed:(){
-              if(_eventController.text.isEmpty) return;
+              if(_eventController.text.isEmpty) return; //if text field is empty
+              Navigator.pop(context);
               setState(() {
-                if(_events[_controller.selectedDay] != null) {
+                if(_events[_controller.selectedDay] != null) {//if there are already events on selected day
                   _events[_controller.selectedDay].add(_eventController.text);
                 }
-                else{
+                else{ //if no events on selected day
                   _events[_controller.selectedDay] = [_eventController.text];
                 }
                 prefs.setString("events", json.encode(encodeMap(_events)));
                 _eventController.clear();
-                Navigator.pop(context);
               });
             },
           )
