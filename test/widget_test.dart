@@ -75,7 +75,6 @@ void main() {
     expect(find.byType(AppBar), findsOneWidget);
     expect(find.byKey(new Key("calendar")), findsOneWidget);
     expect(find.byType(Text), findsWidgets);
-  
   });
 
   testWidgets('todo call test', (WidgetTester tester) async{
@@ -88,6 +87,8 @@ void main() {
 
   testWidgets('groups call test.', (WidgetTester tester) async{
      await tester.pumpWidget(buildTestableWidget(Groups()));
+     await tester.enterText(find.byType(TextField), 'TEST');
+     expect(find.byKey(new Key("container")), findsOneWidget);
   });
 
   testWidgets('add_group call test', (WidgetTester tester) async{

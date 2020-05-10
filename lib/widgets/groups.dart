@@ -105,6 +105,7 @@ class _HomeState extends State<Home> {
           crossAxisCount: 2,
           onItemFound: (Post post, int index) {
             return Container(
+              key: new Key("container"),
               color: Colors.lightBlue,
               child: ListTile(
                 title: Text(post.title),
