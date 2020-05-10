@@ -89,11 +89,12 @@ void main() {
     await tester.pumpWidget(buildTestableWidget(Groups()));
     expect(find.byKey(new Key("safearea")), findsOneWidget);
     //await tester.enterText(find.byType(TextField), 'TEST');
-
-    //expect(find.byKey(new Key("group_title")), findsOneWidget);
+    await tester.tap(find.byKey(new Key("adab")));
+    expect(find.byType(Container), findsNWidgets(6));
   });
 
   testWidgets('add_group call test', (WidgetTester tester) async{
     await tester.pumpWidget(buildTestableWidget(addGroups()));
+    expect(find.byType(AppBar), findsOneWidget);
   });
 }

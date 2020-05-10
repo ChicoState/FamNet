@@ -87,6 +87,7 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               RaisedButton(
+                key: new Key("adab"),
                 child: Text("Create group"),
                 onPressed: () {
                   navigateToAddGroups(context);

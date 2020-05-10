@@ -13,6 +13,7 @@ class addGroups extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        key: new Key("adab_pressed"),
         title: Text('Add Group'),
         backgroundColor: Colors.redAccent,
       ),
