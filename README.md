@@ -1,5 +1,6 @@
 ## Badges : 
-<div align="center">[![Build Status](https://travis-ci.com/capktkirk/FamNet.svg?branch=master)](https://travis-ci.com/capktkirk/FamNet) | [![Coverage Status](https://coveralls.io/repos/github/capktkirk/FamNet/badge.svg?branch=master)](https://coveralls.io/github/capktkirk/FamNet?branch=master)</div>
+|:----:|:----:|
+| [![Build Status](https://travis-ci.com/capktkirk/FamNet.svg?branch=master)](https://travis-ci.com/capktkirk/FamNet) | [![Coverage Status](https://coveralls.io/repos/github/capktkirk/FamNet/badge.svg?branch=master)](https://coveralls.io/github/capktkirk/FamNet?branch=master)|
 =======
 # famnet
 
