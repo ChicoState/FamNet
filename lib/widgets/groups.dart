@@ -70,7 +70,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Groups"
+        ),
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon:Icon(Icons.arrow_back),
+          onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => FirstScreen())); },
+        ),
+      ),
       body: SafeArea(
+        key: new Key("safearea"),
 
         child: SearchBar<Post>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -84,14 +94,11 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               RaisedButton(
+                key: new Key("adab"),
                 child: Text("Create group"),
                 onPressed: () {
                   navigateToAddGroups(context);
                 },
-              ),
-              RaisedButton(
-                child: Text("Cancel"),
-                onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => FirstScreen())); },
               ),
             ],
           ),
@@ -105,7 +112,9 @@ class _HomeState extends State<Home> {
             return Container(
               color: Colors.lightBlue,
               child: ListTile(
-                title: Text(post.title),
+                title: Text(
+                  post.title,
+                  ),
                 isThreeLine: true,
                 subtitle: Text(post.body),
                 onTap: () {
@@ -127,7 +136,7 @@ class Detail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Colors.white70,
+          color: Colors.black12,
         ),
         title: Text(
           gPost.title,
