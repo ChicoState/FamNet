@@ -20,7 +20,6 @@ dependencies:
   http:
   flutter:
     sdk: flutter
-  table_calendar: ^2.2.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -33,13 +32,19 @@ dependencies:
   cloud_firestore: ^0.12.9+5
   flappy_search_bar: ^1.7.2
   shared_preferences: ^0.5.7
+  table_calendar: ^2.2.3
+
+
+  # This is the section for testing deps.
   firebase_auth_mocks:
   google_sign_in_mocks: 
-  dio:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+# Testing Deps
+
   test:
   mockito:
 

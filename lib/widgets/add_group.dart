@@ -116,13 +116,14 @@ void _saveData(Gcreation group) async {
   final uid = user.uid;
   group.setOwner(uid);
   var json = group.toJson();
-  String newkey = databaseReference.child("groups").push().key;
-  //databaseReference.child("groups").push().set(json);
-  databaseReference.child("groups").child(newkey).set(json);
-  //String newkey = databaseReference.child("groupData").push().key;
+
+  databaseReference.child("groups").push().set(json);
+  String newkey = databaseReference.child("groupData").push().key;
   databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
   String UID= TUID;
   databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
+  print("The user is " +TUID);
+  print("The key is " + newkey);
 }
 //Class that holds groups information between user entering it and it being submitted.
 class Gcreation {
