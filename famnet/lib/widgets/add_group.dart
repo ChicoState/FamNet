@@ -79,7 +79,7 @@ class _FormDemoState extends State<FormDemo> {
       decoration: InputDecoration(labelText: 'Short Description'),
       validator: (String value) {
         if (value.isEmpty) {
-          return "empty";
+          return ' ';
         }
       },
       onSaved: (String value) {
