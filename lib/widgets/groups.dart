@@ -73,6 +73,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        key: new Key("safearea"),
 
         child: SearchBar<Post>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -105,10 +106,11 @@ class _HomeState extends State<Home> {
           crossAxisCount: 2,
           onItemFound: (Post post, int index) {
             return Container(
-              key: new Key("container"),
               color: Colors.lightBlue,
               child: ListTile(
-                title: Text(post.title),
+                title: Text(
+                  post.title,
+                  ),
                 isThreeLine: true,
                 subtitle: Text(post.body),
                 onTap: () {

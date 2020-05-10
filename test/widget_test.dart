@@ -86,9 +86,11 @@ void main() {
   });
 
   testWidgets('groups call test.', (WidgetTester tester) async{
-     await tester.pumpWidget(buildTestableWidget(Groups()));
-     await tester.enterText(find.byType(TextField), 'TEST');
-     expect(find.byKey(new Key("container")), findsOneWidget);
+    await tester.pumpWidget(buildTestableWidget(Groups()));
+    expect(find.byKey(new Key("safearea")), findsOneWidget);
+    //await tester.enterText(find.byType(TextField), 'TEST');
+
+    //expect(find.byKey(new Key("group_title")), findsOneWidget);
   });
 
   testWidgets('add_group call test', (WidgetTester tester) async{
