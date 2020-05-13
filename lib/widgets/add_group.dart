@@ -6,9 +6,9 @@ import 'package:famnet/sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignInAccount currentUser = googleSignIn.currentUser;
-String TUID = currentUser.id;
+String tuid = currentUser.id;
 
-class addGroups extends StatelessWidget {
+class AddGroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,25 +111,25 @@ final databaseReference = FirebaseDatabase.instance.reference();
 void _saveData(Gcreation group) async {
   final FirebaseUser user = await _auth.currentUser();
   final uid = user.uid;
-  String UID= TUID;
+  String UID= tuid;
   group.setOwner(UID);
   var json = group.toJson();
 
   databaseReference.child("groups").push().set(json);
   String newkey = databaseReference.child("groupData").push().key;
-  databaseReference.child("groupData").child(newkey).set({"Gname":group.Gname});
+  databaseReference.child("groupData").child(newkey).set({"Gname":group.GName});
   databaseReference.child("groupData").child(newkey).child("UIDS").push().set({"uid":UID});
 }
 //Class that holds groups information between user entering it and it being submitted.
 class Gcreation {
-  String Gname;
+  String GName;
   String Description;
   String Owner;
 
-  Gcreation(this.Gname,this.Description);
+  Gcreation(this.GName,this.Description);
 //Returns class as a map which can then be used to send as json
   Map toJson() {
-    return {"Gname":Gname,"Description":Description,"Owner":Owner};
+    return {"Gname":GName,"Description":Description,"Owner":Owner};
   }
   void setOwner(String Owner)
   {

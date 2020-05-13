@@ -96,7 +96,7 @@ void main() {
   });
 
   testWidgets('add_group call test', (WidgetTester tester) async{
-    await tester.pumpWidget(buildTestableWidget(addGroups()));
+    await tester.pumpWidget(buildTestableWidget(AddGroups()));
     expect(find.byType(AppBar), findsOneWidget);
   });
   testWidgets('poll test.', (WidgetTester tester) async{
@@ -107,9 +107,20 @@ void main() {
   });
 
   // testWidgets('poll form test', (WidgetTester tester) async{
-  //   Poll testpoll;ZZZ
+  //   Poll testpoll;
   //   await tester.pumpWidget(buildTestableWidget(PollForm()));
   //   expect(find.byType(TextFormField), findsNothing);
   // });
+  testWidgets('find group call test.', (WidgetTester tester) async{
+    await tester.pumpWidget(buildTestableWidget(Groups()));
+    await tester.pump(Duration(milliseconds:500));
+    expect(find.byType(RaisedButton), findsOneWidget);
+    await tester.pump(Duration(milliseconds:500));
+    await tester.tap(find.byType(TextField));
+    await tester.pump(Duration(milliseconds:500));
+    // await tester.enterText(find.byType(TextField), 'TEST\n');
+    // expect(find.byType(Container), findsWidgets);
+    
+  });
 
 }
