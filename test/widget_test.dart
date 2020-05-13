@@ -9,6 +9,7 @@ import 'package:famnet/widgets/groups.dart';
 import 'package:famnet/widgets/todo.dart';
 import 'package:famnet/widgets/add_group.dart';
 // import 'package:famnet/widgets/polls/form.dart';
+import '../lib/widgets/polls/poll_content.dart';
 import 'package:famnet/widgets/polls/multi_form.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../lib/first_screen.dart';
@@ -104,6 +105,7 @@ void main() {
     expect(find.byType(AppBar), findsOneWidget);
     await tester.tap(find.byType(IconButton));
     expect(find.byType(Text), findsNWidgets(4));
+    Poll testPoll;
   });
 
   // testWidgets('poll form test', (WidgetTester tester) async{
@@ -114,14 +116,14 @@ void main() {
   testWidgets('find group call test.', (WidgetTester tester) async{
     await tester.pumpWidget(buildTestableWidget(Groups()));
     await tester.pump(Duration(milliseconds:500));
-    expect(find.byType(RaisedButton), findsOneWidget);
+    expect(find.byType(RaisedButton), findsOneWidget); //Find the create group button.
     await tester.pump(Duration(milliseconds:500));
-    await tester.tap(find.byType(TextField));
+    await tester.tap(find.byType(TextField)); //Tap the text field.
     await tester.pump(Duration(milliseconds:500));
     // await tester.enterText(find.byType(TextField), 'TEST\n');
-    await tester.tap(find.byType(IconButton));
     // await tester.tap(find.byElementType(Text));
     // expect(find.byType(Container), findsWidgets);
+    await tester.tap(find.byType(IconButton)); //Test back button.
     
   });
 
