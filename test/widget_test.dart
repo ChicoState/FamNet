@@ -119,6 +119,8 @@ void main() {
     await tester.tap(find.byType(TextField));
     await tester.pump(Duration(milliseconds:500));
     // await tester.enterText(find.byType(TextField), 'TEST\n');
+    await tester.tap(find.byType(IconButton));
+    // await tester.tap(find.byElementType(Text));
     // expect(find.byType(Container), findsWidgets);
     
   });
