@@ -4,11 +4,13 @@
  * 
  */
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:famnet/widgets/groups.dart';
 import 'package:famnet/widgets/todo.dart';
 import 'package:famnet/widgets/add_group.dart';
-// import 'package:famnet/widgets/polls/form.dart';
+import 'package:famnet/widgets/polls/form.dart';
 import '../lib/widgets/polls/poll_content.dart';
 import 'package:famnet/widgets/polls/multi_form.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -106,6 +108,13 @@ void main() {
     await tester.tap(find.byType(IconButton));
     expect(find.byType(Text), findsNWidgets(4));
     Poll testPoll;
+    // PollForm pfTest(testPoll);
+  });
+
+  testWidgets('multiform test.', (WidgetTester tester) async {
+    await tester.pumpWidget(buildTestableWidget(MultiForm()));
+    expect(find.byType(AppBar), findsOneWidget);
+    await tester.tap(find.byType(FloatingActionButton));
   });
 
   // testWidgets('poll form test', (WidgetTester tester) async{
