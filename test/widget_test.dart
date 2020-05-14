@@ -136,4 +136,8 @@ void main() {
     
   });
 
+  testWidgets('Searchbar tester.', (WidgetTester tester) async{
+    await tester.pumpWidget(buildTestableWidget(Home()));
+  });
+
 }
