@@ -1,7 +1,6 @@
 //form.dart
 //builds each individual form for polls
 
-import 'package:famnet/widgets/polls/multi_form.dart';
 import 'package:flutter/material.dart';
 import 'package:famnet/widgets/polls/poll_content.dart';
 
@@ -11,6 +10,7 @@ class PollForm extends StatefulWidget {
   final Poll poll;
   final state = _PollFormState();
   final OnDelete onDelete;
+  List<String> _options = [];
 
   PollForm({Key key, this.poll, this.onDelete}) : super(key: key);
   @override
@@ -20,8 +20,6 @@ class PollForm extends StatefulWidget {
 
 class _PollFormState extends State<PollForm> {
   final form = GlobalKey<FormState>();
-  // final myController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -81,16 +79,15 @@ class _PollFormState extends State<PollForm> {
               Padding(
                 padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
                 child: TextFormField(
-                  // widget.poll.options.add("meme"),
                   onSaved: (val) => widget.poll.option = val,
                   decoration: InputDecoration(
-                    labelText: 'Option ',
+                    labelText: 'Option',
                     hintText: 'Add a response option ',
                     icon: Icon(Icons.create),
                     isDense: true,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -103,5 +100,9 @@ class _PollFormState extends State<PollForm> {
     var valid = form.currentState.validate();
     if (valid) form.currentState.save();
     return valid;
+  }
+
+  void addOption(String option) {
+    print("meme");
   }
 }

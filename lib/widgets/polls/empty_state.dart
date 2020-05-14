@@ -1,7 +1,6 @@
 //empty_state.dart
 //this is what is displayed if no polls have been created
 
-
 import 'package:flutter/material.dart';
 
 class EmptyState extends StatelessWidget {
@@ -14,7 +13,6 @@ class EmptyState extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       elevation: 16,
       color: Theme.of(context).cardColor.withOpacity(.95),
-      shadowColor: Theme.of(context).accentColor.withOpacity(.5),
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(

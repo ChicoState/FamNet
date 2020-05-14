@@ -1,5 +1,5 @@
-//multi_form.dart
-//allows for creation, saving, deleting of multiple polls
+// //multi_form.dart
+// //allows for creation, saving, deleting of multiple polls
 
 import 'package:flutter/material.dart';
 import 'package:famnet/widgets/polls/empty_state.dart';
