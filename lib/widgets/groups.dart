@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
     return posts;
   }
   Future navigateToAddGroups(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => addGroups()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AddGroups()));
   }
 
   @override
@@ -102,9 +102,9 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          onCancelled: () {
-            print("Cancelled triggered");
-          },
+          // onCancelled: () {
+          //   print("Cancelled triggered");
+          // },
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           crossAxisCount: 2,
