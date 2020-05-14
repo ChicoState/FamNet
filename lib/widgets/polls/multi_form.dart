@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:famnet/widgets/polls/empty_state.dart';
 import 'package:famnet/widgets/polls/form.dart';
+import 'package:famnet/first_screen.dart';
 import 'package:famnet/widgets/polls/poll_content.dart';
 
 class PollApp extends StatelessWidget {
@@ -30,11 +31,13 @@ class _MultiFormState extends State<MultiForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: .0,
-        leading: Icon(
-          Icons.poll,
+        title: Text(
+          'Polls'
         ),
-        title: Text('Polls'),
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon:Icon(Icons.arrow_back),
+        onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => FirstScreen())); },
+        ),
         actions: <Widget>[
           FlatButton(
             child: Text('Save'),

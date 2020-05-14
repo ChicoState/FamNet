@@ -68,10 +68,10 @@ void signOutGoogle() async {
 }
 
 
-class userData {
+class UserData {
   String userDataUid = authId;
   Queue userGroups;
-  userData(this.userGroups);
+  UserData(this.userGroups);
 
   Map toJson() {
     return {"User_ID":userDataUid, "groups_apart":userGroups};
