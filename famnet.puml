@@ -1,0 +1,252 @@
+@startuml
+set namespaceSeparator ::
+
+class "famnet::first_screen.dart::FirstScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::first_screen.dart::FirstScreen"
+
+class "famnet::login_page.dart::LoginPage" {
+  +_LoginPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::login_page.dart::LoginPage"
+
+class "famnet::login_page.dart::_LoginPageState" {
+  +Widget build()
+  -Widget _signInButton()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::login_page.dart::_LoginPageState"
+
+class "famnet::main.dart::FamNetApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::main.dart::FamNetApp"
+
+class "famnet::sign_in.dart::userData" {
+  +String userDataUid
+  +Queue userGroups
+  +Map toJson()
+}
+
+"famnet::sign_in.dart::userData" o-- "dart::collection::Queue"
+
+class "famnet::widgets::add_group.dart::addGroups" {
+  +Widget build()
+  +void backToMainPage()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::widgets::add_group.dart::addGroups"
+
+class "famnet::widgets::add_group.dart::FormDemo" {
+  +State createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::widgets::add_group.dart::FormDemo"
+
+class "famnet::widgets::add_group.dart::_FormDemoState" {
+  -GlobalKey<FormState> _formKey
+  -Map<String, dynamic> _formData
+  +FocusNode focusPassword
+  +Widget build()
+  -Widget _buildForm()
+  -Widget _buildNameField()
+  -Widget _buildDescriptionField()
+  -Widget _buildSubmitButton()
+  -void _submitForm()
+}
+
+"famnet::widgets::add_group.dart::_FormDemoState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"famnet::widgets::add_group.dart::_FormDemoState" o-- "flutter::src::widgets::focus_manager.dart::FocusNode"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::widgets::add_group.dart::_FormDemoState"
+
+class "famnet::widgets::add_group.dart::Gcreation" {
+  +String Gname
+  +String Description
+  +String Owner
+  +Map toJson()
+  +void setOwner()
+}
+
+class "famnet::widgets::calendar.dart::Calendar" {
+  +State createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::widgets::calendar.dart::Calendar"
+
+class "famnet::widgets::calendar.dart::CalendarState" {
+  -CalendarController _controller
+  -Map<DateTime, List> _events
+  -List _selectedEvents
+  -TextEditingController _eventController
+  +SharedPreferences prefs
+  +void initState()
+  +dynamic initPrefs()
+  +Map encodeMap()
+  +Map decodeMap()
+  +Widget build()
+  -dynamic _showRemoveDialog()
+  -dynamic _showAddDialog()
+}
+
+"famnet::widgets::calendar.dart::CalendarState" o-- "table_calendar::table_calendar.dart::CalendarController"
+"famnet::widgets::calendar.dart::CalendarState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"famnet::widgets::calendar.dart::CalendarState" o-- "shared_preferences::shared_preferences.dart::SharedPreferences"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::widgets::calendar.dart::CalendarState"
+
+class "famnet::widgets::groups.dart::Groups" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::widgets::groups.dart::Groups"
+
+class "famnet::widgets::groups.dart::Post" {
+  +String title
+  +String body
+  +String gid
+}
+
+class "famnet::widgets::groups.dart::Home" {
+  +_HomeState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::widgets::groups.dart::Home"
+
+class "famnet::widgets::groups.dart::_HomeState" {
+  -SearchBarController<Post> _searchBarController
+  -Future _getALlPosts()
+  +Future navigateToAddGroups()
+  +Widget build()
+}
+
+"famnet::widgets::groups.dart::_HomeState" o-- "flappy_search_bar::flappy_search_bar.dart::SearchBarController<Post>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::widgets::groups.dart::_HomeState"
+
+class "famnet::widgets::groups.dart::Detail" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::widgets::groups.dart::Detail"
+
+class "famnet::widgets::groups.dart::add" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::widgets::groups.dart::add"
+
+class "famnet::widgets::groups.dart::Gcreation" {
+  +String key
+  +int hasData
+  +List<Map> matchGroups
+  +List<String> keyMap
+}
+
+class "famnet::widgets::groups.dart::FirebaseGroups" {
+  {static} +Future getGroups()
+}
+
+class "famnet::widgets::login_widget.dart::LoginPage" {
+  +_LoginPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::widgets::login_widget.dart::LoginPage"
+
+class "famnet::widgets::login_widget.dart::_LoginPageState" {
+  +Widget build()
+  -Widget _signInButton()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::widgets::login_widget.dart::_LoginPageState"
+
+class "famnet::widgets::polls::empty_state.dart::EmptyState" {
+  +String title
+  +String message
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::widgets::polls::empty_state.dart::EmptyState"
+
+class "famnet::widgets::polls::form.dart::PollForm" {
+  +Poll poll
+  +_PollFormState state
+  +dynamic Function() onDelete
+  +_PollFormState createState()
+  +bool isValid()
+}
+
+"famnet::widgets::polls::form.dart::PollForm" o-- "famnet::widgets::polls::poll_content.dart::Poll"
+"famnet::widgets::polls::form.dart::PollForm" o-- "famnet::widgets::polls::form.dart::_PollFormState"
+"famnet::widgets::polls::form.dart::PollForm" o-- "famnet::widgets::polls::form.dart::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::widgets::polls::form.dart::PollForm"
+
+class "famnet::widgets::polls::form.dart::_PollFormState" {
+  +GlobalKey<FormState> form
+  +Widget build()
+  +bool validate()
+}
+
+"famnet::widgets::polls::form.dart::_PollFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::widgets::polls::form.dart::_PollFormState"
+
+class "famnet::widgets::polls::multi_form.dart::PollApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "famnet::widgets::polls::multi_form.dart::PollApp"
+
+class "famnet::widgets::polls::multi_form.dart::MultiForm" {
+  +_MultiFormState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::widgets::polls::multi_form.dart::MultiForm"
+
+class "famnet::widgets::polls::multi_form.dart::_MultiFormState" {
+  +List<PollForm> polls
+  +Widget build()
+  +void onDelete()
+  +void onAddForm()
+  +void onSave()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::widgets::polls::multi_form.dart::_MultiFormState"
+
+class "famnet::widgets::polls::poll_content.dart::Poll" {
+  +String group
+  +String topic
+  +String option
+  +List<String> options
+}
+
+class "famnet::widgets::todo.dart::TodoList" {
+  +State createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "famnet::widgets::todo.dart::TodoList"
+
+class "famnet::widgets::todo.dart::TodoListState" {
+  -String _email
+  -List<String> _todoItems
+  -void _addTodoItem()
+  -void _pushAddTodoScreen()
+  -void _removeTodoItem()
+  -void _promptRemoveTodoItem()
+  -Widget _buildTodoList()
+  -Widget _buildTodoItem()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "famnet::widgets::todo.dart::TodoListState"
+
+class "famnet::widgets::todo.dart::Tlist" {
+  +String jsonId
+  +bool finished
+  +String task
+  +bool inUse
+  +Map toJson()
+}
+
+
+@enduml
